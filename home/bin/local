@@ -1,0 +1,16 @@
+#!/bin/bash
+
+[ $UID -ne 0 ] && echo "[ERR] Pleaese run as superuser." && exit 1
+
+modprobe radeon
+
+while true
+do
+  [ -e /sys/kernel/debug/vgaswitcheroo/switch ] && break
+done
+
+echo OFF > /sys/kernel/debug/vgaswitcheroo/switch
+echo noop > /sys/block/sdb/queue/scheduler
+
+echo "[DONE]"
+exit 0

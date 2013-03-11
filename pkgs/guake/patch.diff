@@ -1,0 +1,253 @@
+diff -crw guake-git/data/guake.schemas guake/data/guake.schemas
+*** guake-git/data/guake.schemas	2013-02-02 14:50:29.728331476 +0800
+--- guake/data/guake.schemas	2013-02-02 14:53:49.428317800 +0800
+***************
+*** 257,262 ****
+--- 257,274 ----
+          </schema>
+  
+          <schema>
++             <key>/schemas/apps/guake/style/font/allow_bold</key>
++             <applyto>/apps/guake/style/font/allow_bold</applyto>
++             <owner>guake</owner>
++             <type>bool</type>
++             <default>true</default>
++             <locale name="C">
++                 <short>Allow bold text.</short>
++                 <long>Enable or disable the bold text in the terminal.</long>
++             </locale>
++         </schema>
++ 
++         <schema>
+              <key>/schemas/apps/guake/style/font/palette</key>
+              <applyto>/apps/guake/style/font/palette</applyto>
+              <owner>guake</owner>
+diff -crw guake-git/data/prefs.glade guake/data/prefs.glade
+*** guake-git/data/prefs.glade	2013-02-02 14:50:29.738331476 +0800
+--- guake/data/prefs.glade	2013-02-02 15:03:56.751609543 +0800
+***************
+*** 620,626 ****
+                              <child>
+                                <widget class="GtkTable" id="table1">
+                                  <property name="visible">True</property>
+!                                 <property name="n_rows">4</property>
+                                  <property name="n_columns">2</property>
+                                  <property name="column_spacing">12</property>
+                                  <property name="row_spacing">6</property>
+--- 620,626 ----
+                              <child>
+                                <widget class="GtkTable" id="table1">
+                                  <property name="visible">True</property>
+!                                 <property name="n_rows">5</property>
+                                  <property name="n_columns">2</property>
+                                  <property name="column_spacing">12</property>
+                                  <property name="row_spacing">6</property>
+***************
+*** 636,641 ****
+--- 636,643 ----
+                                    </widget>
+                                    <packing>
+                                      <property name="right_attach">2</property>
++                                     <property name="top_attach">1</property>
++                                     <property name="bottom_attach">2</property>
+                                      <property name="x_options">GTK_FILL</property>
+                                      <property name="y_options"></property>
+                                    </packing>
+***************
+*** 648,655 ****
+                                      <property name="use_markup">True</property>
+                                    </widget>
+                                    <packing>
+!                                     <property name="top_attach">1</property>
+!                                     <property name="bottom_attach">2</property>
+                                      <property name="x_options">GTK_FILL</property>
+                                      <property name="y_options"></property>
+                                    </packing>
+--- 650,657 ----
+                                      <property name="use_markup">True</property>
+                                    </widget>
+                                    <packing>
+!                                     <property name="top_attach">2</property>
+!                                     <property name="bottom_attach">3</property>
+                                      <property name="x_options">GTK_FILL</property>
+                                      <property name="y_options"></property>
+                                    </packing>
+***************
+*** 666,673 ****
+                                    <packing>
+                                      <property name="left_attach">1</property>
+                                      <property name="right_attach">2</property>
+!                                     <property name="top_attach">1</property>
+!                                     <property name="bottom_attach">2</property>
+                                      <property name="y_options"></property>
+                                    </packing>
+                                  </child>
+--- 668,675 ----
+                                    <packing>
+                                      <property name="left_attach">1</property>
+                                      <property name="right_attach">2</property>
+!                                     <property name="top_attach">2</property>
+!                                     <property name="bottom_attach">3</property>
+                                      <property name="y_options"></property>
+                                    </packing>
+                                  </child>
+***************
+*** 679,686 ****
+                                      <property name="use_markup">True</property>
+                                    </widget>
+                                    <packing>
+!                                     <property name="top_attach">2</property>
+!                                     <property name="bottom_attach">3</property>
+                                      <property name="x_options">GTK_FILL</property>
+                                      <property name="y_options"></property>
+                                    </packing>
+--- 681,688 ----
+                                      <property name="use_markup">True</property>
+                                    </widget>
+                                    <packing>
+!                                     <property name="top_attach">3</property>
+!                                     <property name="bottom_attach">4</property>
+                                      <property name="x_options">GTK_FILL</property>
+                                      <property name="y_options"></property>
+                                    </packing>
+***************
+*** 693,700 ****
+                                      <property name="use_markup">True</property>
+                                    </widget>
+                                    <packing>
+!                                     <property name="top_attach">3</property>
+!                                     <property name="bottom_attach">4</property>
+                                      <property name="x_options">GTK_FILL</property>
+                                      <property name="y_options"></property>
+                                    </packing>
+--- 695,702 ----
+                                      <property name="use_markup">True</property>
+                                    </widget>
+                                    <packing>
+!                                     <property name="top_attach">4</property>
+!                                     <property name="bottom_attach">5</property>
+                                      <property name="x_options">GTK_FILL</property>
+                                      <property name="y_options"></property>
+                                    </packing>
+***************
+*** 723,730 ****
+                                    <packing>
+                                      <property name="left_attach">1</property>
+                                      <property name="right_attach">2</property>
+!                                     <property name="top_attach">2</property>
+!                                     <property name="bottom_attach">3</property>
+                                      <property name="y_options"></property>
+                                    </packing>
+                                  </child>
+--- 725,732 ----
+                                    <packing>
+                                      <property name="left_attach">1</property>
+                                      <property name="right_attach">2</property>
+!                                     <property name="top_attach">3</property>
+!                                     <property name="bottom_attach">4</property>
+                                      <property name="y_options"></property>
+                                    </packing>
+                                  </child>
+***************
+*** 752,759 ****
+                                    <packing>
+                                      <property name="left_attach">1</property>
+                                      <property name="right_attach">2</property>
+!                                     <property name="top_attach">3</property>
+!                                     <property name="bottom_attach">4</property>
+                                      <property name="y_options"></property>
+                                    </packing>
+                                  </child>
+--- 754,776 ----
+                                    <packing>
+                                      <property name="left_attach">1</property>
+                                      <property name="right_attach">2</property>
+!                                     <property name="top_attach">4</property>
+!                                     <property name="bottom_attach">5</property>
+!                                     <property name="y_options"></property>
+!                                   </packing>
+!                                 </child>
+!                                 <child>
+!                                   <widget class="GtkCheckButton" id="allow_bold">
+!                                     <property name="label" translatable="yes">Allow bold text</property>
+!                                     <property name="visible">True</property>
+!                                     <property name="can_focus">True</property>
+!                                     <property name="receives_default">False</property>
+!                                     <property name="draw_indicator">True</property>
+!                                     <signal name="toggled" handler="on_allow_bold_toggled"/>
+!                                   </widget>
+!                                   <packing>
+!                                     <property name="right_attach">2</property>
+!                                     <property name="x_options">GTK_FILL</property>
+                                      <property name="y_options"></property>
+                                    </packing>
+                                  </child>
+diff -crw guake-git/src/guake guake/src/guake
+*** guake-git/src/guake	2013-02-02 14:50:29.741664809 +0800
+--- guake/src/guake	2013-02-02 15:07:56.388259799 +0800
+***************
+*** 136,141 ****
+--- 136,142 ----
+          notify_add(KEY('/general/history_size'), self.history_size_changed)
+          notify_add(KEY('/general/scroll_output'), self.keystroke_output)
+          notify_add(KEY('/general/scroll_keystroke'), self.keystroke_toggled)
++         notify_add(KEY('/style/font/allow_bold'), self.allow_bold_toggled)
+  
+          notify_add(KEY('/general/use_default_font'), self.default_font_toggled)
+          notify_add(KEY('/style/font/style'), self.fstyle_changed)
+***************
+*** 236,241 ****
+--- 237,249 ----
+          for i in self.guake.term_list:
+              i.set_scroll_on_keystroke(entry.value.get_bool())
+  
++     def allow_bold_toggled(self, client, connection_id, entry, data):
++         """If the gconf var allow_bold be changed, this method will
++         be called and will enable/disable the bold text in all terminals
++         """
++         for i in self.guake.term_list:
++             i.set_allow_bold(entry.value.get_bool())
++ 
+      def default_font_toggled(self, client, connection_id, entry, data):
+          """If the gconf var use_default_font be changed, this method
+          will be called and will change the font style to the gnome
+***************
+*** 876,881 ****
+--- 884,890 ----
+          self.client.notify(KEY('/style/font/style'))
+          self.client.notify(KEY('/style/font/color'))
+          self.client.notify(KEY('/style/font/palette'))
++         self.client.notify(KEY('/style/font/allow_bold'))
+          self.client.notify(KEY('/style/background/color'))
+          self.client.notify(KEY('/style/background/image'))
+          self.client.notify(KEY('/style/background/transparency'))
+diff -crw guake-git/src/prefs.py guake/src/prefs.py
+*** guake-git/src/prefs.py	2013-02-02 14:50:29.741664809 +0800
+--- guake/src/prefs.py	2013-02-02 15:09:37.118252901 +0800
+***************
+*** 213,218 ****
+--- 213,223 ----
+  
+      # appearance tab
+  
++     def on_allow_bold_toggled(self, chk):
++         """Changes the activity of allow_bold in gconf
++         """
++         self.client.set_bool(KEY('/style/font/allow_bold'), chk.get_active())
++ 
+      def on_use_default_font_toggled(self, chk):
+          """Changes the activity of use_default_font in gconf
+          """
+***************
+*** 503,508 ****
+--- 508,517 ----
+          value = self.client.get_bool(KEY('/general/scroll_keystroke'))
+          self.get_widget('scroll_keystroke').set_active(value)
+  
++         # allow bold
++         value = self.client.get_bool(KEY('/style/font/allow_bold'))
++         self.get_widget('allow_bold').set_active(value)
++ 
+          # default font
+          value = self.client.get_bool(KEY('/general/use_default_font'))
+          self.get_widget('use_default_font').set_active(value)
