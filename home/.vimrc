@@ -62,6 +62,7 @@ Bundle 'a.vim'
 "Bundle 'justmao945/vim-buffergator'
 Bundle 'Yggdroot/indentLine'
 Bundle 'Lokaltog/vim-powerline'
+Bundle 'parenquote.vim'
 
 " ************************************************ 
 " Config buffergator
@@ -122,6 +123,8 @@ set cmdheight=2
 " ================================================ 
 " set cond comment
 set formatoptions+=r
+" linewrap for latex
+au FileType plaintex setlocal formatoptions+=Mm textwidth=80
 
 " set filetype
 au VimEnter,BufNew,BufRead, *.md set ft=mkd
