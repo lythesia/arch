@@ -14,8 +14,9 @@ LABEL_DESC_CODECG:  Descriptor       0,  (SegCodeCGLen - 1),  (DA_C + DA_32)
 /* for ring 3 */
 LABEL_DESC_CODER3:  Descriptor       0,  (SegCodeR3Len - 1),  (DA_C + DA_32 + DA_DPL3)
 LABEL_DESC_STACKR3: Descriptor       0,        TopOfStackR3,  (DA_DRWA + DA_32 + DA_DPL3)
+LABEL_DESC_TSS:     Descriptor       0,        (TSSLen - 1),  DA_386TSS
 /* Gates Descriptor */
-LABEL_CG_TEST:  Gate  SelectorCodeCG, 0,  0,  (DA_386CGATE + DA_DPL0)
+LABEL_CG_TEST:  Gate  SelectorCodeCG, 0,  0,  (DA_386CGATE + DA_DPL3) // NOT DA_DPL0 because call gate need CPL(3)<=DPL
 // below is WRONG! because 'DA_386CGate' is NOT 'DA_386CGATE! However GAS not give error
 // detail about this except only "invalid operands (*und* and *abs* sections) for xxx"!
 //LABEL_CG_TEST:      Gate    SelectorCodeCG, 0, 0, (DA_386CGate + DA_DPL0)
@@ -40,6 +41,7 @@ GdtPtr: .2byte  (GdtLen - 1)  // GDT limit
 .set SelectorCGTest,  (LABEL_CG_TEST     - LABEL_GDT)
 .set SelectorCodeR3,  (LABEL_DESC_CODER3 - LABEL_GDT + SA_RPL3)
 .set SelectorStackR3, (LABEL_DESC_STACKR3- LABEL_GDT + SA_RPL3)
+.set SelectorTSS,     (LABEL_DESC_TSS    - LABEL_GDT)
 
 /* LDT segment */
 LABEL_LDT:
@@ -58,6 +60,7 @@ LDTMessage:   .ascii  "You jump into a LDT segment!\0"
 .set  DataLen,          (.          - LABEL_DATA)
 
 /* 32-bit global stack segment */
+.align 4
 LABEL_STACK:
 .space  512, 0
 .set    TopOfStack, (. - LABEL_STACK)
@@ -126,6 +129,8 @@ LABEL_BEGIN:
   /* Init R3 stuffs */
   InitDesc LABEL_STACKR3, LABEL_DESC_STACKR3
   InitDesc LABEL_SEG_CODER3, LABEL_DESC_CODER3
+  /* Init TSS segment descriptor */
+  InitDesc LABEL_TSS, LABEL_DESC_TSS
 
   /* prepare loading GDTR */
   xor   %eax, %eax
@@ -204,6 +209,9 @@ CODE32.1:
   add   $2, %edi  // because we write 2byte each time
   jmp   CODE32.1
 CODE32.2:
+  mov   $(SelectorTSS), %ax
+  ltr   %ax   /* load TSS to TR register */
+
   /* fake call procedure */
   pushl $(SelectorStackR3)  // == push SS
   pushl $(TopOfStackR3)     // == push ESP
@@ -211,7 +219,7 @@ CODE32.2:
   pushl $0                  // == push EIP
   lret                      /* lret to LABEL_SEG_CODER3 and execute */
 
-  lcall $(SelectorCGTest), $0  
+CODE32.3:
   mov   $(SelectorLDT), %ax
   lldt  %ax
   ljmp  $(SelectorLDTCodeA), $0
@@ -240,6 +248,8 @@ LABEL_SEG_CODER3:
   movb  $0xc, %ah
   movb  $'3', %al
   mov   %ax, %gs:(%edi)
+  
+  lcall $(SelectorCGTest), $0       /* call CODECG through call gate(ring3 -> ring0) */
   jmp   .
 /* get length ... */
 .set  SegCodeR3Len, . - LABEL_SEG_CODER3
