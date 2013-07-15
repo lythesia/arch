@@ -15,19 +15,25 @@ alias vi='gvim'
 alias y='yaourt'
 alias mv='mv -i'
 alias cp='cp -i'
-alias rm='rm -rf'
+#alias rm=trash
 alias ..='cd ..'
 alias df='df -h'
 alias archey='archey -c cyan'
-alias p='pacman-color'
+alias p='pacman --color=auto'
 alias c='clear'
+alias m='mocp'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
+alias dmesg='dmesg --human'
 alias hist='history'
 alias sc='systemctl'
 alias jc='journalctl'
 alias cc='clang -std=c99 -Wall'
 alias cxx='clang++ -std=c++11 -Wall'
+
+trash() {
+  mv $@ ~/.local/share/Trash/files/
+}
 
 RED="\[\e[1;31m\]"
 GREEN="\[\e[1;32m\]"

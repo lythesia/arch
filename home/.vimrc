@@ -16,6 +16,8 @@ set clipboard+=unnamed
 
 " no visual bell
 set novisualbell
+" no bell(in awesome)
+" set vb t_vb=
 
 " slim gui
 set guioptions=ai
@@ -57,12 +59,20 @@ Bundle 'gmarik/vundle'
 Bundle 'msanders/snipmate.vim'
 Bundle 'jade.vim'
 Bundle 'scrooloose/nerdtree'
-Bundle 'Markdown-syntax'
+"Bundle 'Markdown-syntax'
+Bundle 'plasticboy/vim-markdown'
 Bundle 'a.vim'
 "Bundle 'justmao945/vim-buffergator'
 Bundle 'Yggdroot/indentLine'
+if $TERM != 'linux' || has("gui_running")
 Bundle 'Lokaltog/vim-powerline'
-Bundle 'parenquote.vim'
+endif
+"Bundle 'parenquote.vim'
+
+" ************************************************ 
+" Markdown section
+" ************************************************ 
+let g:vim_markdown_folding_disabled=1
 
 " ************************************************ 
 " Config buffergator
@@ -127,7 +137,7 @@ set formatoptions+=r
 au FileType plaintex setlocal formatoptions+=Mm textwidth=80
 
 " set filetype
-au VimEnter,BufNew,BufRead, *.md set ft=mkd
+au VimEnter,BufNew,BufRead, *.{md,mkd} set ft=mkd
 
 " set tab
 set tabstop=2
