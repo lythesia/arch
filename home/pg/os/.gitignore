@@ -1,0 +1,8 @@
+*.o
+*.elf
+*.bin
+*.BIN
+*.com
+*.img
+*.log
+*.swp

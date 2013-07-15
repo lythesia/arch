@@ -1,0 +1,10 @@
+create patch:
+  diff old new -crw # c: context r: recursive w: ignore white spaces
+
+patch blob:
+  patch -p0 < [patch.diff] # p: extrac path, if same path level, etc.
+
+notice:
+  In patch CWD, there must not be the NEW blob, otherwise patch will operate the NEW one! Alternatively, can substitute NEW with OLD of [patch.diff].
+
+# vim: set ft=sh:

@@ -1,0 +1,25 @@
+##############
+# Bochs conf #
+##############
+
+# memory size
+megs: 32
+
+# filename of ROM images
+romimage: file=/usr/share/bochs/BIOS-bochs-latest
+vgaromimage: file=/usr/share/bochs/VGABIOS-lgpl-latest
+
+# what disk image to be used
+floppya: 1_44=boot.img, status=inserted
+
+# boot disk
+boot: a
+
+# log file
+log: bochs.log
+
+# diable mouse
+mouse: enabled=0
+
+# enable key mapping, US layout as default
+keyboard: keymap=/usr/share/bochs/keymaps/x11-pc-us.map

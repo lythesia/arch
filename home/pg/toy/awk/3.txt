@@ -1,0 +1,5 @@
+tcp        0      0 coolshell.cn:80        61.140.101.185:37538        FIN_WAIT2
+tcp        0      0 coolshell.cn:80        116.234.127.77:11502        FIN_WAIT2
+tcp        0      1 coolshell.cn:80        124.152.181.209:26825       FIN_WAIT1
+tcp        0      1 coolshell.cn:80        208.115.113.92:50601        LAST_ACK
+tcp        0      0 coolshell.cn:80        117.136.20.85:50025         FIN_WAIT2
