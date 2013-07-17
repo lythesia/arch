@@ -1,6 +1,6 @@
 /* GDT Descriptor Attributes */
 .set  DA_32,  0x4000  // 32-bit segment
-.set  DA_LIMIT_4K,  0x8000 // 4K, G=1, unit = 4K!
+.set  DA_LIMIT_4K,  0x8000 // 4K
 
 /* privilege level */
 .set  DA_DPL0, 0x00
