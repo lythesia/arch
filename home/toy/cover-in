@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Dependencies
+#   ImageMagick
+# usage: prog <num>
+
+CMD=$(which identify)
+[ -z $CMD ] && echo "ImageMagick not installed." && exit 1
+
+(($1)) && MAXN=$1
+for i in $(seq 0 $MAXN); do
+  wget -O acdown http://wiki.acfun.tv/keyheaders/cover.php > /dev/null 2>&1
+  md5=$(md5sum acdown | awk '{print $1}')
+  [ -e $md5.* ] && echo "skip .." && continue
+  ext=$($CMD -format '%m ' acdown[0] | tr 'A-Z' 'a-z')
+  mv acdown $md5.$ext && echo "Get $md5.$ext .."
+done
+echo "complete."
+exit 0
+
+# vim: set ft=sh:
