@@ -15,7 +15,6 @@ alias vi='gvim'
 alias y='yaourt'
 alias mv='mv -i'
 alias cp='cp -i'
-#alias rm=trash
 alias ..='cd ..'
 alias df='df -h'
 alias archey='archey -c cyan'

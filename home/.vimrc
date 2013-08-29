@@ -57,9 +57,7 @@ set runtimepath+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'msanders/snipmate.vim'
-"Bundle 'jade.vim'
 Bundle 'scrooloose/nerdtree'
-"Bundle 'Markdown-syntax'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'a.vim'
 "Bundle 'justmao945/vim-buffergator'
@@ -67,7 +65,6 @@ Bundle 'Yggdroot/indentLine'
 if $TERM != 'linux' || has("gui_running")
 Bundle 'Lokaltog/vim-powerline'
 endif
-"Bundle 'parenquote.vim'
 
 " ************************************************ 
 " Nerdtree section

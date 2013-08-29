@@ -2,6 +2,7 @@ export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fictx
 
+# xft fonts
 xset +fp /usr/share/fonts/microsoft/
 xset +fp /usr/share/fonts/ttf-ms-fonts-zh_cn/
 
