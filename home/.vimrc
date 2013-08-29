@@ -57,7 +57,7 @@ set runtimepath+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'msanders/snipmate.vim'
-Bundle 'jade.vim'
+"Bundle 'jade.vim'
 Bundle 'scrooloose/nerdtree'
 "Bundle 'Markdown-syntax'
 Bundle 'plasticboy/vim-markdown'
@@ -69,6 +69,10 @@ Bundle 'Lokaltog/vim-powerline'
 endif
 "Bundle 'parenquote.vim'
 
+" ************************************************ 
+" Nerdtree section
+" ************************************************ 
+let g:NERDTreeIgnore=['.o$[[file]]', '.bin$[[file]]', '.img$[[file]]']
 " ************************************************ 
 " Markdown section
 " ************************************************ 
@@ -112,7 +116,7 @@ if has("gui_running")
   set guifont=YaHei\ Consolas\ Hybrid\ for\ Powerline\ 9
   set linespace=0
   set cursorline
-elseif $TERM == 'xterm' || $TERM == "screen-256color"
+elseif $TERM == 'xterm' || $TERM == "screen-256color" || $TERM == "rxvt-unicode-256color"
   set t_Co=256
   colo desertEx_term
 else
@@ -138,6 +142,7 @@ au FileType plaintex setlocal formatoptions+=Mm textwidth=80
 
 " set filetype
 au VimEnter,BufNew,BufRead, *.{md,mkd} set ft=mkd
+au BufNew,BufRead *.{asm,inc} set ft=nasm
 
 " set tab
 set tabstop=2
@@ -187,6 +192,11 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" scroll down half page
+func! Scrolld()
+  exec "normal ".(winheight(winnr())/2)."\<C-e>"
+endfunc
+map <C-d> :call Scrolld()<cr>
 
 " ================================================ 
 " Self utilities

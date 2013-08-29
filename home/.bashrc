@@ -22,6 +22,7 @@ alias archey='archey -c cyan'
 alias p='pacman --color=auto'
 alias c='clear'
 alias m='mocp'
+alias v='viewnior'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias dmesg='dmesg --human'
@@ -32,7 +33,10 @@ alias cc='clang -std=c99 -Wall'
 alias cxx='clang++ -std=c++11 -Wall'
 
 trash() {
-  mv $@ ~/.local/share/Trash/files/
+  while [ "$#" -ne 0 ]; do
+    mv $1 ~/.local/share/Trash/files/
+    shift
+  done
 }
 
 RED="\[\e[1;31m\]"
@@ -56,3 +60,5 @@ export LESS_TERMCAP_us=$'\e[04;32m'
 export LESS_TERMCAP_ue=$'\e[0m'
 
 export EDITOR=vim
+export GEM_HOME=~/.gem/ruby/2.0.0
+PATH=$PATH:$GEM_HOME/bin

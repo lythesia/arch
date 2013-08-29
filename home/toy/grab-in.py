@@ -27,7 +27,7 @@ def grb(thread, start, end):
   '''
   result = {}
   for pn in range(start, end+1):
-    page = urlopen(thread + '?pn' + str(pn))
+    page = urlopen(thread + '?pn=' + str(pn))
     doc = fromstring(page.read().decode(encoding), base_url=thread)
     doc.make_links_absolute()
     result[pn] = doc.xpath(xpath_rule)
