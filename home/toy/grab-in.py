@@ -54,28 +54,27 @@ def dmp(urls, save_folder):
     pass
 
   cur, skip = 0, 0
-  for(pn, lst) in urls.items():
-    print('Page {0:0>4d}: '.format(pn))
-    for i in lst:
-      if pn in cache_buf and i in cache_buf[pn]:
-        skip += 1
-        continue
-      elif pn not in cache_buf:
-        cache_buf[pn] = []
+  try:
+    for(pn, lst) in urls.items():
+      print('Page {0:0>4d}: '.format(pn))
+      for i in lst:
+        if pn in cache_buf and i in cache_buf[pn]:
+          skip += 1
+          continue
+        elif pn not in cache_buf:
+          cache_buf[pn] = []
 
-      fname = os.path.join(parent_path, '{:04d}_{:04d}.{}'.format(pn, cur+skip, i.split('.')[-1]))
-      try:
+        fname = os.path.join(parent_path, '{:04d}_{:04d}.{}'.format(pn, cur+skip, i.split('.')[-1]))
         dmp_aux(i, fname)
         cur += 1
         cache_buf[pn].append(i)
-      except KeyboardInterrupt:
-        sys.stderr.write('\nUser interrupted.\n')
-        with open(cache_file, 'wb') as fh:
-          dump(cache_buf, fh)
-        exit(1)
+  except KeyboardInterrupt:
+    sys.stderr.write('\nUser interrupted.\n')
+    exit(1)
+  finally:
+    with open(cache_file, 'wb') as fh:
+      dump(cache_buf, fh)
 
-  with open(cache_file, 'wb') as fh:
-    dump(cache_buf, fh)
   print('{} pic(s) done, {} pic(s) skipped.'.format(cur, skip))
 
 
