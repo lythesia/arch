@@ -1,4 +1,3 @@
-" ================================================
 " Basic section
 " ================================================
 " no vi-keyboard
@@ -9,7 +8,8 @@ set history=100
 
 " encoding
 set fenc=utf-8
-set fencs=utf-8,gb18030,gbk,gb2312,cp936,euc-jp
+set fencs=utf-8,gb18030,gbk,gb2312,cp936,euc-jp,shift-jis
+set enc=utf-8
 
 " share clipboard
 set clipboard+=unnamed
@@ -24,7 +24,7 @@ set guioptions=ai
 set mouse=a
 
 " keywords
-set iskeyword+=_,$,@,#,-
+set iskeyword+=_,$,@,#
 
 " auto read
 set autoread
@@ -34,20 +34,18 @@ set autochdir
 
 " line number
 set number
+set relativenumber
+set cursorline
 
 " syntax colo
 syntax on
-
-" file type check
-filetype off
 
 " set indent
 set autoindent
 set smartindent
 
-" reset filetype
-filetype plugin indent on
-
+" file type check
+filetype off
 
 " ================================================ 
 " Bundle section
@@ -61,10 +59,32 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'a.vim'
 "Bundle 'justmao945/vim-buffergator'
+Bundle 'jade.vim'
 Bundle 'Yggdroot/indentLine'
 if $TERM != 'linux' || has("gui_running")
 Bundle 'Lokaltog/vim-powerline'
+Bundle 'Shougo/neocomplete.vim'
 endif
+
+" reset filetype
+filetype plugin indent on
+
+" ************************************************ 
+" Neocomplete section
+" ************************************************ 
+let g:acp_enableAtStartup=0
+let g:neocomplete#enable_at_startup=1
+let g:neocomplete#enable_smart_case=1
+let g:neocomplete#sources#syntax#min_keyword_length=3
+let g:neocomplete#lock_buffer_name_pattern='\*ku\*'
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javacriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+inoremap <expr><C-g> neocomplete#undo_completion()
+inoremap <expr><C-l> neocomplete#complete_common_string()
+" ************************************************ 
 
 " ************************************************ 
 " Nerdtree section
@@ -112,7 +132,6 @@ if has("gui_running")
   colo desertEx
   set guifont=YaHei\ Consolas\ Hybrid\ for\ Powerline\ 9
   set linespace=0
-  set cursorline
 elseif $TERM == 'xterm' || $TERM == "screen-256color" || $TERM == "rxvt-unicode-256color"
   set t_Co=256
   colo desertEx_term
@@ -120,6 +139,11 @@ else
   colo elflord
 endif
 
+" no syntax for large file
+au BufReadPost * if getfsize(bufname("%")) > 512*1024 |
+\ set syntax= |
+\ set nowrap |
+\ endif
 " status bar
 set laststatus=2
 "set ruler
@@ -132,22 +156,24 @@ set cmdheight=2
 " ================================================ 
 " Edit section
 " ================================================ 
+" !! override by sys
 " set cond comment
 set formatoptions+=r
 " linewrap for latex
-au FileType plaintex setlocal formatoptions+=Mm textwidth=80
+au FileType plaintex,tex setlocal formatoptions+=bMm textwidth=80
+let g:tex_fast=""
 
 " set filetype
-au VimEnter,BufNew,BufRead, *.{md,mkd} set ft=mkd
-au BufNew,BufRead *.{asm,inc} set ft=nasm
+autocmd BufNewFile,BufRead *.{asm,inc} setlocal ft=nasm
 
 " set tab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set expandtab
-"au FileType html,jade setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-au FileType make setlocal tabstop=4 shiftwidth=4 noexpandtab
+" !! override by sys
+"au FileType python setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+au FileType make setlocal tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab
 
 " show bracket match
 set showmatch
@@ -158,6 +184,7 @@ set backspace=eol,start,indent
 
 " search hint
 set incsearch
+set hlsearch
 set ignorecase
 set smartcase
 

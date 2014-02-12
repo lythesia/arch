@@ -7,6 +7,8 @@
 
 complete -cf sudo
 
+set -o vi
+
 alias sudo='sudo '
 alias ls='ls --color=auto'
 alias ll='ls -lh'
