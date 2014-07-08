@@ -9,7 +9,8 @@ set history=100
 
 " encoding
 set fenc=utf-8
-set fencs=utf-8,gb18030,gbk,gb2312,cp936,euc-jp
+set fencs=utf-8,gb18030,gbk,gb2312,cp936,euc-jp,shift-jis
+set enc=utf-8
 
 " share clipboard
 set clipboard+=unnamed
@@ -34,6 +35,7 @@ set autochdir
 
 " line number
 set number
+set relativenumber
 
 " syntax colo
 syntax on
@@ -116,7 +118,7 @@ let g:buffergator_split_size=20
 let g:buffergator_autoupdate=1
 
 " ************************************************ 
-" Config buffergator
+" Config indentline
 " ************************************************ 
 " Set char
 let g:indentLine_char='┆' 
@@ -126,6 +128,11 @@ let g:indentLine_char='┆'
 " ************************************************ 
 " Set powerline style
 let g:Powerline_symbols='fancy'
+
+" ************************************************ 
+" Config snipmate
+" ************************************************ 
+let g:snips_author='lythesia'
 
 " ================================================ 
 " View section
@@ -142,6 +149,12 @@ elseif $TERM == 'xterm' || $TERM == "screen-256color" || $TERM == "rxvt-unicode-
 else
   colo elflord
 endif
+
+" no syntax for large file
+au BufReadPost * if getfsize(bufname("%")) > 512*1024 |
+\ set syntax= |
+\ set nowrap |
+\ endif
 
 " status bar
 set laststatus=2
@@ -184,6 +197,7 @@ set backspace=eol,start,indent
 
 " search hint
 set incsearch
+set hlsearch
 set ignorecase
 set smartcase
 
@@ -234,7 +248,7 @@ map <C-d> :call Scrolld()<cr>
 func! Compile()
   exec "w"
   if &filetype == 'c'
-    exec "!clang % -g -O2 -lm -Wall -std=c99 -o %<"
+    exec "!clang % -g -O2 -lm -Wall -std=gnu11 -o %<"
   elseif &filetype == 'cpp'
     exec "!clang++ % -g -O2 -lm -Wall -std=c++11 -o %<"
   elseif &filetype == 'java'
@@ -260,7 +274,7 @@ endfunc
 
 func! TabPos_Initialize()
     for i in range(1, 9) 
-        exe "map <M-" . i . "> :call TabPos_ActivateBuffer(" . i . ")<CR>"
+      exe "map <M-" . i . "> :call TabPos_ActivateBuffer(" . i . ")<CR>"
     endfor
     exe "map <M-0> :call TabPos_ActivateBuffer(10)<CR>"
 endfunc
