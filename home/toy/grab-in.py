@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-# Dependencies:
-#   python-lxml
+# Dependency: python-lxml
 # 
 # Use '-h' for help
 #

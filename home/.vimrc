@@ -61,11 +61,34 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'a.vim'
 "Bundle 'justmao945/vim-buffergator'
+Bundle 'jade.vim'
 Bundle 'Yggdroot/indentLine'
 if $TERM != 'linux' || has("gui_running")
 Bundle 'Lokaltog/vim-powerline'
 endif
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'tpope/vim-surround'
+Bundle 'Shougo/neocomplete.vim'
 
+" ************************************************ 
+" Neocomplete section
+" ************************************************ 
+let g:acp_enableAtStartup=0
+let g:neocomplete#enable_at_startup=1
+let g:neocomplete#enable_smart_case=1
+let g:neocomplete#sources#syntax#min_keyword_length=3
+let g:neocomplete#lock_buffer_name_pattern='\*ku\*'
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javacriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" ************************************************ 
+" ************************************************ 
+" EasyMotion section
+" ************************************************ 
+let g:EasyMotion_leader_key='<Leader>'
+" ************************************************ 
 " ************************************************ 
 " Nerdtree section
 " ************************************************ 
@@ -110,7 +133,7 @@ let g:Powerline_symbols='fancy'
 " colo schema
 if has("gui_running")
   colo desertEx
-  set guifont=YaHei\ Consolas\ Hybrid\ for\ Powerline\ 9
+  set guifont=YaHei\ Consolas\ Hybrid\ for\ Powerline\ 10
   set linespace=0
   set cursorline
 elseif $TERM == 'xterm' || $TERM == "screen-256color" || $TERM == "rxvt-unicode-256color"
@@ -136,9 +159,12 @@ set cmdheight=2
 set formatoptions+=r
 " linewrap for latex
 au FileType plaintex setlocal formatoptions+=Mm textwidth=80
+let g:tex_fast=""
 
 " set filetype
 au VimEnter,BufNew,BufRead, *.{md,mkd} set ft=mkd
+au VimEnter,BufNew,BufRead, *.jade set ft=jade
+au VimEnter,BufNew,BufRead, *.ejs set ft=html
 au BufNew,BufRead *.{asm,inc} set ft=nasm
 
 " set tab
@@ -166,6 +192,12 @@ inoremap ( ()<esc>i
 inoremap [ []<esc>i
 inoremap { {}<esc>i
 
+" use space to folden
+set foldmethod=syntax
+set foldlevelstart=99
+nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<cr>
+set foldopen-=search
+set foldopen-=undo
 
 " ================================================ 
 " Moving section
