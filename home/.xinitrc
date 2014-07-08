@@ -1,11 +1,4 @@
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fictx
+[ -f ~/.Xresources ] && xrdb -load ~/.Xresources
+[ -f  ~/.xsession-errors ] && [ `stat -c %s ~/.xsession-errors` -gt 2097152 ] && rm -f ~/.xseesion-errors
 
-# xft fonts
-xset +fp /usr/share/fonts/microsoft/
-xset +fp /usr/share/fonts/ttf-ms-fonts-zh_cn/
-
-exec gnome-session
-#exec gnome-session-cinnamon
-#exec awesome
+exec dbus-launch --exit-with-session awesome

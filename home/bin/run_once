@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# Run prog unless already running
-
-pgrep $@ > /dev/null || ($@ &)

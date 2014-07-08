@@ -1,0 +1,15 @@
+/*
+ * Fix gnome-themes-standard for Awesome WM
+ *
+ * Remove the transparent margin to show shadows and round corners
+ */
+
+.window-frame {
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+}
+
+.titlebar {
+  border-radius: 0;
+}

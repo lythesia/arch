@@ -1,15 +1,13 @@
-#!/bin/bash
+# Mp3 id2/3 tag convert
+# Dependency: mutagen
+find . -iname "*.mp3" -exec mid3iconv -e $(encoding) {} \;
 
-#导致乱码的原因
-#大陆的音乐下载下来，标题和内容大都使用GB2312进行编码的，而Ubuntu或其他Linux上面默认使用UTF-8进行解码。这就造成乱码了。
+# File system encoding convert
+# Dependency: convmv
+# file name
+convmv -r -f $from -t $to --notest --nosmart *
 
-Dependency: mutagen
+# file content
+iconv -f $from -t $to $input > $output
 
-#文件名由GBK转换为UTF8
-convmv -r -f cp936 -t utf8 --notest --nosmart *
-
-#文件内容由GBK到UTF8
-iconv -f gbk -t utf8 $i > newfile
-
-#将 mp3 标签编码 由GBK转换至utf-8
-find . -iname "*.mp3" -exec mid3iconv -e GBK {} \;
+# vim: set ft=sh:

@@ -2,12 +2,9 @@
 # /etc/fstab: static file system information
 #
 # <file system>	<dir>	<type>	<options>	<dump>	<pass>
-# /dev/sdc2 UUID=cf3d587b-adf1-416e-8a31-d897e1e500e5
-#/dev/sdc2           	/         	ext4      	defaults,noatime,discard	0 1
-LABEL=root           	/         	ext4      	defaults,noatime,discard	0 1
+LABEL=root           	/         	ext4      	defaults,noatime,discard	0 1 # `noatime`, `discard` for ssd
 
-# /dev/sdc3 UUID=a9b74ad2-fef6-48b6-b48c-7896e52e960c
 LABEL=swap          	none      	swap      	defaults  	0 0
 LABEL=home            /home       ext4        defaults    0 0
 
-/dev/sda5	/media/d	ntfs	uid=1000,gid=100,dmask=022,fmask=133,defaults 0 0
+/dev/sdaX	/mount/point	ntfs	uid=1000,gid=100,dmask=022,fmask=133,defaults 0 0

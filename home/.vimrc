@@ -1,3 +1,4 @@
+" ================================================
 " Basic section
 " ================================================
 " no vi-keyboard
@@ -8,8 +9,7 @@ set history=100
 
 " encoding
 set fenc=utf-8
-set fencs=utf-8,gb18030,gbk,gb2312,cp936,euc-jp,shift-jis
-set enc=utf-8
+set fencs=utf-8,gb18030,gbk,gb2312,cp936,euc-jp
 
 " share clipboard
 set clipboard+=unnamed
@@ -24,7 +24,7 @@ set guioptions=ai
 set mouse=a
 
 " keywords
-set iskeyword+=_,$,@,#
+set iskeyword+=_,$,@,#,-
 
 " auto read
 set autoread
@@ -34,18 +34,20 @@ set autochdir
 
 " line number
 set number
-set relativenumber
-set cursorline
 
 " syntax colo
 syntax on
+
+" file type check
+filetype off
 
 " set indent
 set autoindent
 set smartindent
 
-" file type check
-filetype off
+" reset filetype
+filetype plugin indent on
+
 
 " ================================================ 
 " Bundle section
@@ -63,11 +65,10 @@ Bundle 'jade.vim'
 Bundle 'Yggdroot/indentLine'
 if $TERM != 'linux' || has("gui_running")
 Bundle 'Lokaltog/vim-powerline'
-Bundle 'Shougo/neocomplete.vim'
 endif
-
-" reset filetype
-filetype plugin indent on
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'tpope/vim-surround'
+Bundle 'Shougo/neocomplete.vim'
 
 " ************************************************ 
 " Neocomplete section
@@ -82,10 +83,12 @@ autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javacriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-inoremap <expr><C-g> neocomplete#undo_completion()
-inoremap <expr><C-l> neocomplete#complete_common_string()
 " ************************************************ 
-
+" ************************************************ 
+" EasyMotion section
+" ************************************************ 
+let g:EasyMotion_leader_key='<Leader>'
+" ************************************************ 
 " ************************************************ 
 " Nerdtree section
 " ************************************************ 
@@ -130,8 +133,9 @@ let g:Powerline_symbols='fancy'
 " colo schema
 if has("gui_running")
   colo desertEx
-  set guifont=YaHei\ Consolas\ Hybrid\ for\ Powerline\ 9
+  set guifont=YaHei\ Consolas\ Hybrid\ for\ Powerline\ 10
   set linespace=0
+  set cursorline
 elseif $TERM == 'xterm' || $TERM == "screen-256color" || $TERM == "rxvt-unicode-256color"
   set t_Co=256
   colo desertEx_term
@@ -139,11 +143,6 @@ else
   colo elflord
 endif
 
-" no syntax for large file
-au BufReadPost * if getfsize(bufname("%")) > 512*1024 |
-\ set syntax= |
-\ set nowrap |
-\ endif
 " status bar
 set laststatus=2
 "set ruler
@@ -156,24 +155,25 @@ set cmdheight=2
 " ================================================ 
 " Edit section
 " ================================================ 
-" !! override by sys
 " set cond comment
 set formatoptions+=r
 " linewrap for latex
-au FileType plaintex,tex setlocal formatoptions+=bMm textwidth=80
+au FileType plaintex setlocal formatoptions+=Mm textwidth=80
 let g:tex_fast=""
 
 " set filetype
-autocmd BufNewFile,BufRead *.{asm,inc} setlocal ft=nasm
+au VimEnter,BufNew,BufRead, *.{md,mkd} set ft=mkd
+au VimEnter,BufNew,BufRead, *.jade set ft=jade
+au VimEnter,BufNew,BufRead, *.ejs set ft=html
+au BufNew,BufRead *.{asm,inc} set ft=nasm
 
 " set tab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set expandtab
-" !! override by sys
-"au FileType python setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-au FileType make setlocal tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab
+"au FileType html,jade setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+au FileType make setlocal tabstop=4 shiftwidth=4 noexpandtab
 
 " show bracket match
 set showmatch
@@ -184,7 +184,6 @@ set backspace=eol,start,indent
 
 " search hint
 set incsearch
-set hlsearch
 set ignorecase
 set smartcase
 
@@ -193,6 +192,12 @@ inoremap ( ()<esc>i
 inoremap [ []<esc>i
 inoremap { {}<esc>i
 
+" use space to folden
+set foldmethod=syntax
+set foldlevelstart=99
+nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<cr>
+set foldopen-=search
+set foldopen-=undo
 
 " ================================================ 
 " Moving section

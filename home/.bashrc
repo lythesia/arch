@@ -7,6 +7,7 @@
 
 complete -cf sudo
 
+# vi mode for easy-edit
 set -o vi
 
 alias sudo='sudo '
@@ -17,13 +18,14 @@ alias vi='gvim'
 alias y='yaourt'
 alias mv='mv -i'
 alias cp='cp -i'
+#alias rm=trash
 alias ..='cd ..'
 alias df='df -h'
-alias archey='archey -c cyan'
 alias p='pacman --color=auto'
 alias c='clear'
 alias m='mocp'
 alias v='viewnior'
+alias nemo='nemo --no-desktop'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias dmesg='dmesg --human'
@@ -32,6 +34,10 @@ alias sc='systemctl'
 alias jc='journalctl'
 alias cc='clang -std=c99 -Wall'
 alias cxx='clang++ -std=c++11 -Wall'
+alias cnpm="npm --registry=http://r.cnpmjs.org \
+                --cache=$HOME/.npm/.cache/cnpm \
+                --disturl=http://dist.cnpmjs.org \
+                --userconfig=$HOME/.cnpmrc"
 
 trash() {
   while [ "$#" -ne 0 ]; do
@@ -49,8 +55,15 @@ CYAN="\[\e[1;36m\]"
 WHITE="\[\e[1;37m\]"
 ORG="\[\e[0m\]"
 
-PS1="\n$CYAN% $YELLOW[$UYELLOW\w$ORG$YELLOW]\n$CYAN% $ORG"
+PS1="\n$CYAN% $YELLOW[$UYELLOW\w$ORG$YELLOW]$RED[\h]\n$CYAN% $ORG"
 PS2="$CYAN> $ORG"
+
+# powerline-shell
+function _update_ps1() {
+  export PS1="$(~/bin/powerline-shell/powerline-shell.py $? 2> /dev/null)"
+}
+
+#export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 
 export LESS_TERMCAP_mb=$'\e[01;33m'
 export LESS_TERMCAP_md=$'\e[01;33m'
@@ -61,5 +74,11 @@ export LESS_TERMCAP_us=$'\e[04;32m'
 export LESS_TERMCAP_ue=$'\e[0m'
 
 export EDITOR=vim
-export GEM_HOME=~/.gem/ruby/2.0.0
-PATH=$PATH:$GEM_HOME/bin
+
+# rvm
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# go
+export GOPATH="~/go"
+export PATH="$PATH:$GOPATH/bin"

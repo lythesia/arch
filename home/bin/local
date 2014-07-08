@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Manually turn off video card(ATI) for my laptop and tune for ssd
+# 1. driver must be blacklist in `modprobe.d/anyname.conf`
+# 2. it may take few seconds
+
 [ $UID -ne 0 ] && echo "[ERR] Pleaese run as superuser." && exit 1
 
 modprobe radeon
@@ -7,6 +11,7 @@ modprobe radeon
 while true
 do
   [ -e /sys/kernel/debug/vgaswitcheroo/switch ] && break
+  sleep 1
 done
 
 echo OFF > /sys/kernel/debug/vgaswitcheroo/switch
