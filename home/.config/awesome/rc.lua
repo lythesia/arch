@@ -1,12 +1,4 @@
 --[[
--- Dependency: lain-git(aur)
---
--- note:
---  * for mail widget, I use `python-keyring`, and tune `--connect-timeout` in lain's lib sources
---  * add `cheatsheet.html`
---]]
-
---[[
                                              
      Powerarrow Darker Awesome WM config 2.0 
      github.com/copycat-killer               
@@ -85,7 +77,8 @@ gui_editor = "gvim"
 --graphics   = "gimp"
 --mail       = terminal .. " -e mutt "
 --iptraf     = terminal .. " -g 180x54-20+34 -e sudo iptraf-ng -i all "
---musicplr   = terminal .. " -g 130x34-320+16 -e ncmpcpp "
+--musicplr   = "urxvt -g 130x34-320+16 -e ncmpcpp "
+musicplr  = terminal .. " --geometry=130x34+380+16 -t 'ncmpcpp' -e 'ncmpcpp'"
 
 local layouts = {
     awful.layout.suit.floating,
@@ -98,8 +91,8 @@ local layouts = {
 
 -- {{{ Tags
 tags = {
-   names = { "1", "2", "3", "4", "5"},
-   layout = { layouts[2], layouts[1], layouts[3], layouts[1], layouts[4] }
+   names = { "Code", "Web", "Mus", "Misc", },
+   layout = { layouts[2], layouts[1], layouts[1], layouts[1], }
 }
 
 for s = 1, screen.count() do
@@ -123,6 +116,7 @@ myawesomemenu = {
   { "restart", awesome.restart },
   { "quit", awesome.quit },
   { "shutdown", "systemctl poweroff" },
+  { "reboot", "systemctl reboot" },
 }
 
 mymainmenu = awful.menu({ items = {
@@ -169,6 +163,7 @@ mailwidget = wibox.widget.background(lain.widgets.imap({
 mpdicon = wibox.widget.imagebox(beautiful.widget_music)
 mpdicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(musicplr) end)))
 mpdwidget = lain.widgets.mpd({
+    music_dir = "/media/d/music/mp3",
     settings = function()
         if mpd_now.state == "play" then
             artist = " " .. mpd_now.artist .. " "
@@ -186,6 +181,7 @@ mpdwidget = lain.widgets.mpd({
         widget:set_markup(markup("#EA6F81", artist) .. title)
     end
 })
+mpdwidgetbg = wibox.widget.background(mpdwidget, "#313131")
 
 -- MEM
 memicon = wibox.widget.imagebox(beautiful.widget_mem)
@@ -363,7 +359,7 @@ for s = 1, screen.count() do
     right_layout:add(arrl)
     right_layout:add(arrl_ld)
     right_layout:add(mpdicon)
-    right_layout:add(mpdwidget)
+    right_layout:add(mpdwidgetbg)
     right_layout:add(arrl_dl)
     right_layout:add(volicon)
     right_layout:add(volumewidget)
@@ -656,17 +652,24 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons,
 	                   size_hints_honor = false } },
+
+    { rule = { name = "ncmpcpp" },
+          properties = { tag = tags[1][3]} },
+
     { rule = { class = "URxvt" },
           properties = { opacity = 0.95 } },
+
     { rule = { class = "Gnome-terminal" },
           properties = { opacity = 0.95 } },
-    { rule = { class = "Firefox"}, 
-          properties = { floating = true } },
-    { rule = { class = "Audacious"}, 
-          properties = { floating = true } },
-    { rule = { class = "MPlayer" },
+
+    { rule = { class = "Firefox" }, 
           properties = { floating = true } },
 
+    { rule = { class = "Audacious"}, 
+          properties = { floating = true } },
+
+    { rule = { class = "MPlayer" },
+          properties = { floating = true } },
 }
 -- }}}
 
