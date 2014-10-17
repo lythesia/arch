@@ -15,6 +15,7 @@ local beautiful = require("beautiful")
 local naughty   = require("naughty")
 local drop      = require("scratchdrop")
 local lain      = require("lain")
+local yidoc     = require("yidoc")
 -- }}}
 
 -- {{{ Error handling
@@ -53,6 +54,7 @@ end
 run_once("xcompmgr")
 run_once("fcitx -r")
 run_once("start-pulseaudio-x11")
+run_once("xscreensaver -nosplash &")
 -- }}}
 
 -- {{{ Variable definitions
@@ -413,14 +415,22 @@ globalkeys = awful.util.table.join(
     -- Cheat sheet
     awful.key({ modkey }, "F1",
         function()
-            local f = io.open(os.getenv("HOME") .. "/.config/awesome/cheatsheet.html")
-            ws = f:read("*all")
-            f:close()
-            naughty.notify({ text = ws, timeout = 0, hover_timeout = 0, font = 'Dejavu Sans Mono 10'})
+            yidoc.display(
+              os.getenv("HOME") .. "/.config/awesome/awesome.cheat",
+              {}
+            )
+            --local f = io.open(os.getenv("HOME") .. "/.config/awesome/cheatsheet.html")
+            --ws = f:read("*all")
+            --f:close()
+            --naughty.notify({ text = ws, timeout = 10, hover_timeout = 0.1, font = 'Dejavu Sans Mono 10', opacity = 0.9})
         end),
+
     -- Take a screenshot
     -- https://github.com/copycat-killer/dots/blob/master/bin/screenshot
-    awful.key({ altkey }, "p", function() os.execute("screenshot") end),
+    -- awful.key({ altkey }, "p", function() os.execute("screenshot") end),
+
+    -- lock (using xscreensaver)
+    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
 
     -- Tag browsing
     awful.key({ modkey }, "Left",   awful.tag.viewprev       ),
@@ -536,22 +546,22 @@ globalkeys = awful.util.table.join(
     -- MPD control
     awful.key({ altkey, "Control" }, "Up",
         function ()
-            awful.util.spawn_with_shell("mpc toggle || ncmpcpp toggle || ncmpc toggle || pms toggle")
+            awful.util.spawn_with_shell("mpc toggle || ncmpc toggle || pms toggle")
             mpdwidget.update()
         end),
     awful.key({ altkey, "Control" }, "Down",
         function ()
-            awful.util.spawn_with_shell("mpc stop || ncmpcpp stop || ncmpc stop || pms stop")
+            awful.util.spawn_with_shell("mpc stop || ncmpc stop || pms stop")
             mpdwidget.update()
         end),
     awful.key({ altkey, "Control" }, "Left",
         function ()
-            awful.util.spawn_with_shell("mpc prev || ncmpcpp prev || ncmpc prev || pms prev")
+            awful.util.spawn_with_shell("mpc prev || ncmpc prev || pms prev")
             mpdwidget.update()
         end),
     awful.key({ altkey, "Control" }, "Right",
         function ()
-            awful.util.spawn_with_shell("mpc next || ncmpcpp next || ncmpc next || pms next")
+            awful.util.spawn_with_shell("mpc next || ncmpc next || pms next")
             mpdwidget.update()
         end),
 
@@ -663,6 +673,9 @@ awful.rules.rules = {
           properties = { opacity = 0.95 } },
 
     { rule = { class = "Firefox" }, 
+          properties = { floating = true } },
+
+    { rule = { class = "Google-chrome-stable" },
           properties = { floating = true } },
 
     { rule = { class = "Audacious"}, 
