@@ -149,7 +149,7 @@ mailwidget = wibox.widget.background(lain.widgets.imap({
     timeout  = 180,
     server   = "imap.gmail.com",
     mail     = "iranaikimi@gmail.com",
-    password = "python -c \"import keyring; print(keyring.get_password('system', 'gmail'))\"",
+    password = "python2 -c \"import keyring; print keyring.get_password('system', 'gmail')\"",
     settings = function()
         if mailcount > 0 then
             widget:set_text(" " .. mailcount .. " ")
