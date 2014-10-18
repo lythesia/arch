@@ -143,6 +143,7 @@ if has("gui_running")
   set guifont=YaHei\ Consolas\ Hybrid\ for\ Powerline\ 10
   set linespace=0
   set cursorline
+  set lines=40 columns=100
 elseif $TERM == 'xterm' || $TERM == "screen-256color" || $TERM == "rxvt-unicode-256color"
   set t_Co=256
   colo desertEx_term

@@ -12,7 +12,7 @@ set -o vi
 
 alias sudo='sudo '
 alias ls='ls --color=auto'
-alias ll='ls -lh'
+alias ll='ls++ --potsf'
 alias la='ls -lhA'
 alias vi='gvim'
 alias y='yaourt'
@@ -62,6 +62,11 @@ PS2="$CYAN> $ORG"
 function _update_ps1() {
   export PS1="$(~/bin/powerline-shell/powerline-shell.py $? 2> /dev/null)"
 }
+
+# im
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
 
 #export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 

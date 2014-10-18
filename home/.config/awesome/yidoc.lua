@@ -30,9 +30,7 @@ function parse(fname)
   local result = {}
   maxlen = 0
   local title = ""
-  while true do
-    line = fh:read("*l")
-    if line == nil then break end
+  for line in fh:lines() do
     if string.find(line, "==") then
       local s,_ = string.gsub(line, "==", "")
       title = trim(s)
