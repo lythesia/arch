@@ -52,7 +52,7 @@ end
 --run_once("urxvtd")
 --run_once("unclutter")
 run_once("xcompmgr")
-run_once("fcitx -r")
+run_once("fcitx -r &> /dev/null")
 run_once("start-pulseaudio-x11")
 run_once("xscreensaver -nosplash &")
 -- }}}
@@ -161,29 +161,30 @@ mailwidget = wibox.widget.background(lain.widgets.imap({
     end
 }), "#313131")
 
--- MPD
-mpdicon = wibox.widget.imagebox(beautiful.widget_music)
-mpdicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(musicplr) end)))
-mpdwidget = lain.widgets.mpd({
-    music_dir = "/media/d/music/mp3",
+-- Mpris
+mprisicon = wibox.widget.imagebox(beautiful.widget_music)
+mprisicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(musicplr) end)))
+mpriswidget = lain.widgets.contrib.mpris({
+    player = "audacious",
+    cover_size = 120,
     settings = function()
-        if mpd_now.state == "play" then
-            artist = " " .. mpd_now.artist .. " "
-            title  = mpd_now.title  .. " "
-            mpdicon:set_image(beautiful.widget_music_on)
-        elseif mpd_now.state == "pause" then
-            artist = " mpd "
+        if mpris_now.state == "Playing" then
+            artist = " " .. mpris_now.artist .. " "
+            title  = mpris_now.title  .. " "
+            mprisicon:set_image(beautiful.widget_music_on)
+        elseif mpris_now.state == "Paused" then
+            artist = " " .. mpris_now.player .. " "
             title  = "paused "
         else
             artist = ""
             title  = ""
-            mpdicon:set_image(beautiful.widget_music)
+            mprisicon:set_image(beautiful.widget_music)
         end
 
         widget:set_markup(markup("#EA6F81", artist) .. title)
     end
 })
-mpdwidgetbg = wibox.widget.background(mpdwidget, "#313131")
+mpriswidgetbg = wibox.widget.background(mpriswidget, "#313131")
 
 -- MEM
 memicon = wibox.widget.imagebox(beautiful.widget_mem)
@@ -360,8 +361,8 @@ for s = 1, screen.count() do
     right_layout:add(spr)
     right_layout:add(arrl)
     right_layout:add(arrl_ld)
-    right_layout:add(mpdicon)
-    right_layout:add(mpdwidgetbg)
+    right_layout:add(mprisicon)
+    right_layout:add(mpriswidgetbg)
     right_layout:add(arrl_dl)
     right_layout:add(volicon)
     right_layout:add(volumewidget)
@@ -543,26 +544,28 @@ globalkeys = awful.util.table.join(
             volumewidget.update()
         end),
 
-    -- MPD control
+    -- Mpris control
     awful.key({ altkey, "Control" }, "Up",
         function ()
-            awful.util.spawn_with_shell("mpc toggle || ncmpc toggle || pms toggle")
-            mpdwidget.update()
+            mpriswidget.ctrl("toggle")
+            mpriswidget.update()
         end),
     awful.key({ altkey, "Control" }, "Down",
         function ()
-            awful.util.spawn_with_shell("mpc stop || ncmpc stop || pms stop")
-            mpdwidget.update()
+            mpriswidget.ctrl("stop")
+            mpriswidget.update()
         end),
     awful.key({ altkey, "Control" }, "Left",
         function ()
             awful.util.spawn_with_shell("mpc prev || ncmpc prev || pms prev")
-            mpdwidget.update()
+            mpriswidget.ctrl("prev")
+            mpriswidget.update()
         end),
     awful.key({ altkey, "Control" }, "Right",
         function ()
             awful.util.spawn_with_shell("mpc next || ncmpc next || pms next")
-            mpdwidget.update()
+            mpriswidget.ctrl("next")
+            mpriswidget.update()
         end),
 
     -- Copy to clipboard
