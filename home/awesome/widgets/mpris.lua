@@ -17,8 +17,10 @@ local io           = { popen    = io.popen }
 local os           = { clock    = os.clock,
                        execute  = os.execute,
                        getenv   = os.getenv }
-local string       = { format   = string.format,
+local string       = { char     = string.char,
+                       format   = string.format,
                        gmatch   = string.gmatch }
+local tonumber     = tonumber
 
 local setmetatable = setmetatable
 
@@ -106,7 +108,7 @@ local function worker(args)
                 then
                     helpers.set_map("current mpris track", mpris_now.title)
 
-                    os.execute(string.format("%s %s %s %s", mpriscover, mpris_now.cover, cover_size, default_art))
+                    os.execute(string.format("%s %q %d %q", mpriscover, mpris_now.cover, cover_size, default_art))
 
                     mpris.id = naughty.notify({
                       preset = mpris_notification_preset,
