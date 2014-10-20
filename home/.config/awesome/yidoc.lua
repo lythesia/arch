@@ -3,6 +3,7 @@ local naughty   = require("naughty")
 local string    = string
 local math      = math
 local pairs     = pairs
+local ipairs    = ipairs
 local tostring  = tostring
 local table     = table
 local io        = io
@@ -27,6 +28,7 @@ end
 
 function parse(fname)
   local fh = io.open(fname)
+  local order  = {}
   local result = {}
   maxlen = 0
   local title = ""
@@ -34,6 +36,7 @@ function parse(fname)
     if string.find(line, "==") then
       local s,_ = string.gsub(line, "==", "")
       title = trim(s)
+      order[#order+1] = title
       result[title] = {}
     else
       local pos = string.find(line, "-")
@@ -41,24 +44,29 @@ function parse(fname)
         local left = trim(string.sub(line, 1, pos-1))
         maxlen = math.max(maxlen, unilen(left))
         local right = trim(string.sub(line, pos+1))
-        result[title][left] = right
+        local grp = result[title]
+        grp[#grp+1] = {
+          key = left,
+          doc = right
+        }
       end
     end
   end
   fh:close()
-  return result
+  return order,result
 end
 
-local function markup(keydocs, opt)
+local function markup(order, keydocs, opt)
   local result = {}
-  for title,grp in pairs(keydocs) do
+  for _,title in ipairs(order) do
+    local grp = keydocs[title]
     result[#result + 1] = '<span color="' .. opt.title_fg .. '"><b>' .. title .. '</b></span>'
-    for key,doc in pairs(grp) do
+    for _,keydoc in ipairs(grp) do
       result[#result + 1] = 
         '<span color="' .. opt.key_fg .. '">' ..
-        string.format("%" .. (maxlen - unilen(key)) .. "s  ", "") .. key ..
+        string.format("%" .. (maxlen - unilen(keydoc.key)) .. "s  ", "") .. keydoc.key ..
         '</span>  <span color="' .. opt.doc_fg .. '">' ..
-        doc .. '</span>'
+        keydoc.doc .. '</span>'
     end
   end
   return result
@@ -71,7 +79,8 @@ function display(fname, opt)
   opt.font     = opt.font     or "Dejavu Sans Mono 10"
   opt.opacity  = opt.opacity  or 0.9
 
-  local lines = markup(parse(fname), opt)
+  local ord,docs = parse(fname)
+  local lines = markup(ord, docs, opt)
   local result = ""
   for _,line in pairs(lines) do
     result = result .. line .. '\n'
@@ -83,6 +92,6 @@ function display(fname, opt)
     hover_timeout = 0.1,
     timeout = 10,
     font = opt.font,
-    opacity = opt.opacity
+    opacity = opt.opacity,
   }).nid
 end
