@@ -27,14 +27,38 @@ local setmetatable = setmetatable
 -- Mpris info
 local mpris = {}
 
+local notification = nil
+mpris_notification_preset = { title   = "Now playing", timeout = 6 }
+
 local function hex2char(x)
-  return string.char(tonumber(x, 16))
+    return string.char(tonumber(x, 16))
 end
 
 local function url2path(url)
-  local esp,_ = url:gsub("%%(%x%x)", hex2char)
-  local path,_ = esp:gsub("^file://", "", 1)
-  return path
+    local esp,_ = url:gsub("%%(%x%x)", hex2char)
+    local path,_ = esp:gsub("^file://", "", 1)
+    return path
+end
+
+function mpris:hide()
+    if notification ~= nil then
+      naughty.destroy(notification)
+      notification = nil
+    end
+end
+
+function mpris:show(t_out)
+    if helpers.get_map("current mpris track") ~= nil then
+      mpris:hide()
+      notification = naughty.notify({
+        preset = mpris_notification_preset,
+        icon   = "/tmp/mpriscover.png",
+        timeout = t_out,
+        replaces_id = mpris.id,
+        screen = client.focus and client.focus.screen or 1
+      })
+      mpris.id = notification.id
+    end
 end
 
 local function worker(args)
@@ -49,11 +73,6 @@ local function worker(args)
     local mpriscover = helpers.scripts_dir .. "mpriscover"
 
     mpris.widget = wibox.widget.textbox('')
-
-    mpris_notification_preset = {
-        title   = "Now playing",
-        timeout = 6
-    }
 
     helpers.set_map("current mpris track", nil)
 
@@ -98,7 +117,7 @@ local function worker(args)
                 end
             end
 
-            mpris_notification_preset.text = string.format("%s (%s)\n%s", mpris_now.artist, mpris_now.album, mpris_now.title)
+            mpris_notification_preset.text = string.format("%s (%s)\n%s\n", mpris_now.artist, mpris_now.album, mpris_now.title)
             widget = mpris.widget
             settings()
 
@@ -125,6 +144,10 @@ local function worker(args)
     end
 
     helpers.newtimer("mpris", timeout, mpris.update)
+
+    mpris.widget:connect_signal('mouse::enter', function () mpris:show(0) end)
+    mpris.widget:connect_signal('mouse::leave', function () mpris:hide() end)
+
     return setmetatable(mpris, { __index = mpris.widget })
 end
 
