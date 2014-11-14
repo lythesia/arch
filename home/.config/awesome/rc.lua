@@ -163,7 +163,7 @@ mailwidget = wibox.widget.background(lain.widgets.imap({
 
 -- Mpris
 mprisicon = wibox.widget.imagebox(beautiful.widget_music)
-mprisicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(musicplr) end)))
+--mprisicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(musicplr) end)))
 mpriswidget = lain.widgets.contrib.mpris({
     player = "audacious",
     cover_size = 120,
@@ -428,7 +428,7 @@ globalkeys = awful.util.table.join(
 
     -- Take a screenshot
     -- https://github.com/copycat-killer/dots/blob/master/bin/screenshot
-    -- awful.key({ altkey }, "p", function() os.execute("screenshot") end),
+    awful.key({ altkey }, "p", function() os.execute("screenshot") end),
 
     -- lock (using xscreensaver)
     awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
@@ -525,12 +525,12 @@ globalkeys = awful.util.table.join(
     -- ALSA volume control
     awful.key({ altkey }, "Up",
         function ()
-            awful.util.spawn("amixer -q set Master 1%+")
+            awful.util.spawn("amixer -q set Master 2%+")
             volumewidget.update()
         end),
     awful.key({ altkey }, "Down",
         function ()
-            awful.util.spawn("amixer -q set Master 1%-")
+            awful.util.spawn("amixer -q set Master 2%-")
             volumewidget.update()
         end),
     awful.key({ altkey }, "m",
@@ -557,13 +557,11 @@ globalkeys = awful.util.table.join(
         end),
     awful.key({ altkey, "Control" }, "Left",
         function ()
-            awful.util.spawn_with_shell("mpc prev || ncmpc prev || pms prev")
             mpriswidget.ctrl("prev")
             mpriswidget.update()
         end),
     awful.key({ altkey, "Control" }, "Right",
         function ()
-            awful.util.spawn_with_shell("mpc next || ncmpc next || pms next")
             mpriswidget.ctrl("next")
             mpriswidget.update()
         end),

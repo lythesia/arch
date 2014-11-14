@@ -25,6 +25,7 @@ alias p='pacman --color=auto'
 alias c='clear'
 alias m='mocp'
 alias v='viewnior'
+alias tmux='tmux -2'
 alias nemo='nemo --no-desktop'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
@@ -34,6 +35,8 @@ alias sc='systemctl'
 alias jc='journalctl'
 alias cc='clang -std=c99 -Wall'
 alias cxx='clang++ -std=c++11 -Wall'
+alias prys='pry --simple-prompt'
+alias scm='guile --no-auto-compile'
 alias cnpm="npm --registry=http://r.cnpmjs.org \
                 --cache=$HOME/.npm/.cache/cnpm \
                 --disturl=http://dist.cnpmjs.org \
@@ -87,3 +90,9 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # go
 export GOPATH="~/go"
 export PATH="$PATH:$GOPATH/bin"
+
+# nvm
+export NVM_NODEJS_ORG_MIRROR=http://dist.u.qiniudn.com
+export NVM_DIR="/home/lythesia/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion

@@ -2,7 +2,7 @@
 --[[
                                                   
      Licensed under GNU General Public License v2 
-      * (c) 2014, lythesia <iranaikimi@gmail.org>  
+      * (c) 2014, lythesia <iranaikimi@gmail.com>  
                                                   
 --]]
 

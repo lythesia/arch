@@ -64,9 +64,10 @@ Bundle 'plasticboy/vim-markdown'
 Bundle 'a.vim'
 "Bundle 'justmao945/vim-buffergator'
 Bundle 'jade.vim'
-Bundle 'Yggdroot/indentLine'
 if $TERM != 'linux' || has("gui_running")
+Bundle 'Yggdroot/indentLine'
 Bundle 'Lokaltog/vim-powerline'
+Bundle 'tpope/vim-fugitive'
 endif
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-surround'
