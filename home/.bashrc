@@ -31,6 +31,7 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias dmesg='dmesg --human'
 alias hist='history'
+alias tree='tree -C'
 alias sc='systemctl'
 alias jc='journalctl'
 alias cc='clang -std=c99 -Wall'
@@ -83,6 +84,12 @@ export LESS_TERMCAP_ue=$'\e[0m'
 
 export EDITOR=vim
 
+# nvm
+export NVM_NODEJS_ORG_MIRROR=http://dist.u.qiniudn.com
+export NVM_DIR="/home/lythesia/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
+
 # rvm
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
@@ -91,8 +98,3 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export GOPATH="~/go"
 export PATH="$PATH:$GOPATH/bin"
 
-# nvm
-export NVM_NODEJS_ORG_MIRROR=http://dist.u.qiniudn.com
-export NVM_DIR="/home/lythesia/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion

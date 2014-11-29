@@ -34,7 +34,6 @@ set autoread
 set autochdir
 
 " line number
-set number
 set relativenumber
 
 " syntax colo
@@ -60,10 +59,11 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'msanders/snipmate.vim'
 Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/nerdcommenter'
 Bundle 'plasticboy/vim-markdown'
+Bundle 'jtratner/vim-flavored-markdown'
 Bundle 'a.vim'
-"Bundle 'justmao945/vim-buffergator'
-Bundle 'jade.vim'
+Bundle 'majutsushi/tagbar'
 if $TERM != 'linux' || has("gui_running")
 Bundle 'Yggdroot/indentLine'
 Bundle 'Lokaltog/vim-powerline'
@@ -71,6 +71,8 @@ Bundle 'tpope/vim-fugitive'
 endif
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-surround'
+Bundle 'jiangmiao/auto-pairs'
+" Bundle 'lanjiann/escalt.vim'
 Bundle 'Shougo/neocomplete.vim'
 
 " ************************************************ 
@@ -97,12 +99,24 @@ let g:EasyMotion_leader_key='<Leader>'
 " ************************************************ 
 let g:NERDTreeIgnore=['.o$[[file]]', '.bin$[[file]]', '.img$[[file]]']
 " ************************************************ 
+" Nerdcomment section
+" ************************************************ 
+let g:NERDSpaceDelims=1
+let g:NERDRemoveExtraSpaces=1
+" ************************************************ 
 " Markdown section
 " ************************************************ 
 let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_math=1
+let g:vim_markdown_frontmatter=1
+" ************************************************ 
+" Tagbar section
+" ************************************************ 
+let g:tagbar_ctags_bin="ctags"
+let g:tagbar_width=30
 
 " ************************************************ 
-" Config buffergator
+" Buffergator section
 " ************************************************ 
 " Suppress buffergator keymaps
 let g:buffergator_suppress_keymaps=1
@@ -119,19 +133,24 @@ let g:buffergator_split_size=20
 let g:buffergator_autoupdate=1
 
 " ************************************************ 
-" Config indentline
+" Indentline section
 " ************************************************ 
 " Set char
 let g:indentLine_char='┆' 
 
 " ************************************************ 
-" Config powerline
+" Auto-pair section
+" ************************************************ 
+let g:AutoPairs={'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
+
+" ************************************************ 
+" Powerline section
 " ************************************************ 
 " Set powerline style
 let g:Powerline_symbols='fancy'
 
 " ************************************************ 
-" Config snipmate
+" Snipmate section
 " ************************************************ 
 let g:snips_author='lythesia'
 
@@ -177,10 +196,14 @@ au FileType plaintex setlocal formatoptions+=Mm textwidth=80
 let g:tex_fast=""
 
 " set filetype
-au VimEnter,BufNew,BufRead, *.{md,mkd} set ft=mkd
-au VimEnter,BufNew,BufRead, *.jade set ft=jade
-au VimEnter,BufNew,BufRead, *.ejs set ft=html
-au BufNew,BufRead *.{asm,inc} set ft=nasm
+" au BufNewFile,BufRead, *.{md,mkd} setlocal ft=mkd
+augroup markdown
+  au!
+  au BufNewFile,BufRead, *.{md,mkd,markdown} setlocal ft=ghmarkdown
+augroup end
+au BufNewFile,BufRead, *.jade setlocal ft=jade
+au BufNewFile,BufRead, *.ejs setlocal ft=html
+au BufNewFile,BufRead *.{asm,inc} setlocal ft=nasm
 
 " set tab
 set tabstop=2
@@ -203,11 +226,6 @@ set hlsearch
 set ignorecase
 set smartcase
 
-" auto close [] () {}
-inoremap ( ()<esc>i
-inoremap [ []<esc>i
-inoremap { {}<esc>i
-
 " use space to folden
 set foldmethod=syntax
 set foldlevelstart=99
@@ -220,6 +238,10 @@ set foldopen-=undo
 " ================================================ 
 " remap 0
 map 0 ^
+
+" bracket jump
+map <C-m> :call AutoPairsJump()<cr>
+map <C-i> %
 
 " move as break line
 map j gj
@@ -250,9 +272,9 @@ map <C-d> :call Scrolld()<cr>
 func! Compile()
   exec "w"
   if &filetype == 'c'
-    exec "!clang % -g -O2 -lm -Wall -std=gnu11 -o %<"
+    exec "!clang % -g -O2 -lm -Wall -std=gnu11 -o %<.run"
   elseif &filetype == 'cpp'
-    exec "!clang++ % -g -O2 -lm -Wall -std=c++11 -o %<"
+    exec "!clang++ % -g -O2 -lm -Wall -std=c++11 -o %<.run"
   elseif &filetype == 'java'
     exec "!javac %"
   endif
@@ -261,7 +283,7 @@ endfunc
 func! Run()
   exec "w"
   if &filetype == 'c' || &filetype == 'cpp'
-    exec "!./%<"
+    exec "!./%<.run"
   elseif &filetype == 'java'
     exec "!java %<"
   endif
@@ -293,11 +315,14 @@ endfunc
 " ================================================ 
 " Shortcut remaps
 " ================================================ 
+" shortcut for tagbar view
+silent map <F4> :TagbarToggle<cr>
+
 " shortcut for compile & run
 silent map <F5> :call Compile()<cr>
 silent map <F6> :call Run()<cr>
 
-" shorcut for IDE view
+" shortcut for IDE view
 silent nmap <F2> :call LSidebarToggle()<cr>
 silent imap <F2> <esc>:call LSidebarToggle()<cr>
 silent nmap <F3> :A<cr>

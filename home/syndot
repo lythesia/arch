@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# setup colors
+source $HOME/.color_tab
+
+typeset -A fg bg misc
+colorSet --setaf fg --setab bg --misc misc
+
+[ $? -ne 0 ] && echo "set color fail." && exit 1
+
+cd $(dirname `readlink -f "$0"`)
+SELF_BASENAME=`basename $0`
+
+# do not name with spaces!
+for i in `find`; do
+  [[ $i =~ .git$ ]] && continue
+  [[ $i =~ .gitignore ]] && continue
+  [[ $i =~ .gitmodules ]] && continue
+  [[ $i =~ .git/$ ]] && continue
+  [[ $i =~ ^./README ]] && continue
+  [[ -f $i ]] || continue
+
+  FILE_BASENAME=`basename $i`
+  [[ $FILE_BASENAME == $SELF_BASENAME ]] && continue # exclude this script
+
+  # create if not existed
+  if ! [[ -f $HOME/$i ]]; then
+    printf "\n${fg[white]}[$i]: ${fg[blue]}home createing... "
+    SRC_MOD=`stat -c %a $i`
+
+    # check directory and create
+    DEST_DIR=`dirname $HOME/$i`
+    if [[ ! -d $DEST_DIR ]]; then
+      printf " (new dir) "
+      mkdir -p $DEST_DIR
+    fi
+
+    if [[ -d $DEST_DIR ]]; then
+      install -m $SRC_MOD -p -T $i $HOME/$i
+      printf "done. |"
+    else
+      printf "${fg[red]}failed. |"
+    fi
+
+    continue
+  fi
+
+  # check file identity
+  if diff -q "$HOME/$i" $i &>/dev/null; then
+    # same file
+    printf "${fg[green]}."
+    continue
+  fi
+
+  # check file datetime
+  if [[ "$HOME/$i" -nt $i ]]; then
+    # home has newer file
+    COVERED="$i"
+    COVER="$HOME/$i"
+    printf "\n${fg[white]}[$i]: ${fg[yellow]}repo updating... "
+  else
+    # home has older file
+    COVERED="$HOME/$i"
+    COVER="$i"
+    printf "\n${fg[white]}[$i]: ${fg[cyan]}home updating... "
+  fi
+
+  [ -z $COVERED ] && continue
+
+  DEST_MOD=`stat -c %a $COVERED`
+  DEST_GROUP=`stat -c %g $COVERED`
+  DEST_USER=`stat -c %u $COVERED`
+  
+  # install
+  install -g $DEST_GROUP -o $DEST_USER -m $DEST_MOD -p -T "$COVER" "$COVERED"
+  printf "done. |"
+done
+
+printf "${misc[sgr0]}\n"

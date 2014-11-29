@@ -7,10 +7,11 @@ Xft.hinting: true
 Xft.rgba: rgb
 Xft.hintstyle: hintslight
 
-! rxvt-unicode settings
+! ----------------------.
+! rxvt-unicode settings |
+! ----------------------*
 URxvt.preeditType:Root
 URxvt.inputMethod:fcitx
-URxvt.depth:32
 URxvt.urlLauncher:firefox
 URxvt.scrollBar:False
 URxvt.mouseWheelScrollPage:True
@@ -19,10 +20,12 @@ URxvt.scrollWithBuffer:True
 URxvt.scrollTtyKeypress:True
 URxvt.cursorBlink:True
 URxvt.saveLines:1024
-URxvt.letterSpace:-1
-URxvt.font:xft:Yahei Consolas Hybrid for Powerline:size=10:antialias=true,xft:Inconsolata:size=10:antialias=true
-URxvt.boldFont:xft:Yahei Consolas Hybrid for Powerline:size=10:antialias=true,xft:Inconsolata:size=10:antialias=true
-
+URxvt.letterSpace:-2
+!URxvt.font:xft:Source Code Pro for Powerline:size=10:antialias=true
+!URxvt.boldFont:xft:Source Code Pro for Powerline:size=10:antialias=true
+URxvt.font:xft:YaHei Consolas Hybrid for Powerline:size=10:antialias=true,xft:Source Han Sans:size=10:antialias=true
+URxvt.boldFont:xft:YaHei Consolas Hybrid for Powerline:size=10:antialias=true,xft:Source Han Sans:size=10:antialias=true
+URxvt.iso14755: false
 
 !! to match gnome-terminal "Linux console" scheme
 !! foreground/background
@@ -55,7 +58,7 @@ URxvt.boldFont:xft:Yahei Consolas Hybrid for Powerline:size=10:antialias=true,xf
 
 ! to match gnome-terminal "Tango" scheme
 ! foreground/background
-URxvt*background: Black
+URxvt*background: [80]Black
 URxvt*foreground: White
 ! black
 URxvt.color0 : #000000
@@ -81,3 +84,44 @@ URxvt.color14 : #34E2E2
 ! white
 URxvt.color7 : #D3D7CF
 URxvt.color15 : #EEEEEC
+
+
+!----------------.
+! xterm settings |
+! ---------------*
+xterm*locale: true
+xterm*inputMethod: fcitx
+!xterm*termName: xterm-256color
+!xterm*geometry: 85x25
+xterm*scrollBar: false
+xterm*loginshell: false
+xterm*eightBitInput: false
+xterm*background: black
+xterm*foreground: white
+xterm*cursorBlink: true
+xterm*faceName: Consolas:antialias=true
+xterm*faceNameDoublesize: YaHei Consolas Hybrid for Powerline
+xterm*faceSize: 10
+xterm*allowBoldFonts: false
+xterm*scaleHeight: 1.2
+!URxvt.font:xft:YaHei Consolas Hybrid for Powerline:size=9:antialias=true,xft:Inconsolata:size=9:antialias=true
+!URxvt.boldFont:xft:YaHei Consolas Hybrid for Powerline:size=9:antialias=true,xft:Inconsolata:size=9:antialias=true
+
+! Tango theme
+!tango color scheme
+xterm*color0: #1e1e1e
+xterm*color1: #cc0000
+xterm*color2: #4e9a06
+xterm*color3: #c4a000
+xterm*color4: #3465a4
+xterm*color5: #75507b
+xterm*color6: #0b939b
+xterm*color7: #d3d7cf
+xterm*color8: #555753
+xterm*color9: #ef2929
+xterm*color10: #8ae234
+xterm*color11: #fce94f
+xterm*color12: #729fcf
+xterm*color13: #ad7fa8
+xterm*color14: #00f5e9
+xterm*color15: #eeeeec

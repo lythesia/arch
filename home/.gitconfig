@@ -13,3 +13,5 @@
 	default = simple
 [color]
 	ui = true
+[core]
+	excludesfile = /home/lythesia/.gitignore_global
