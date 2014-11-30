@@ -39,41 +39,40 @@ set relativenumber
 " syntax colo
 syntax on
 
-" file type check
-filetype off
-
 " set indent
 set autoindent
 set smartindent
 
-" reset filetype
-filetype plugin indent on
-
+" file type check
+filetype off
 
 " ================================================ 
 " Bundle section
 " ================================================ 
 " setup vundle
 set runtimepath+=~/.vim/bundle/vundle/
-call vundle#rc()
-Bundle 'gmarik/vundle'
-Bundle 'msanders/snipmate.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'plasticboy/vim-markdown'
-Bundle 'jtratner/vim-flavored-markdown'
-Bundle 'a.vim'
-Bundle 'majutsushi/tagbar'
+call vundle#begin()
+Plugin 'gmarik/vundle'
+Plugin 'msanders/snipmate.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'jtratner/vim-flavored-markdown'
+Plugin 'a.vim'
+Plugin 'majutsushi/tagbar'
 if $TERM != 'linux' || has("gui_running")
-Bundle 'Yggdroot/indentLine'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'tpope/vim-fugitive'
+Plugin 'Yggdroot/indentLine'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'tpope/vim-fugitive'
 endif
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'tpope/vim-surround'
-Bundle 'jiangmiao/auto-pairs'
-" Bundle 'lanjiann/escalt.vim'
-Bundle 'Shougo/neocomplete.vim'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'tpope/vim-surround'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'Shougo/neocomplete.vim'
+
+" reset filetype
+call vundle#end()
+filetype plugin indent on
 
 " ************************************************ 
 " Neocomplete section
@@ -240,8 +239,7 @@ set foldopen-=undo
 map 0 ^
 
 " bracket jump
-map <C-m> :call AutoPairsJump()<cr>
-map <C-i> %
+map <M-i> %
 
 " move as break line
 map j gj
