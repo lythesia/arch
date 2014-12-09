@@ -60,15 +60,16 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'jtratner/vim-flavored-markdown'
 Plugin 'a.vim'
 Plugin 'majutsushi/tagbar'
+Plugin 'rking/ag.vim'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'tpope/vim-surround'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'Shougo/neocomplete.vim'
 if $TERM != 'linux' || has("gui_running")
 Plugin 'Yggdroot/indentLine'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'tpope/vim-fugitive'
 endif
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'tpope/vim-surround'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'Shougo/neocomplete.vim'
 
 " reset filetype
 call vundle#end()
@@ -87,27 +88,30 @@ autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javacriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-" ************************************************ 
+
 " ************************************************ 
 " EasyMotion section
 " ************************************************ 
 let g:EasyMotion_leader_key='<Leader>'
-" ************************************************ 
+
 " ************************************************ 
 " Nerdtree section
 " ************************************************ 
 let g:NERDTreeIgnore=['.o$[[file]]', '.bin$[[file]]', '.img$[[file]]']
+
 " ************************************************ 
 " Nerdcomment section
 " ************************************************ 
 let g:NERDSpaceDelims=1
 let g:NERDRemoveExtraSpaces=1
+
 " ************************************************ 
 " Markdown section
 " ************************************************ 
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_math=1
 let g:vim_markdown_frontmatter=1
+
 " ************************************************ 
 " Tagbar section
 " ************************************************ 
@@ -115,21 +119,9 @@ let g:tagbar_ctags_bin="ctags"
 let g:tagbar_width=30
 
 " ************************************************ 
-" Buffergator section
+" Ag section
 " ************************************************ 
-" Suppress buffergator keymaps
-let g:buffergator_suppress_keymaps=1
-" Split VIEWPORT horizontally, with new split on the top
-let g:buffergator_viewport_split_policy="R"
-" Keep the catalog open
-let g:buffergator_autodismiss_on_select=0
-" Disable auto expand window
-let g:buffergator_autoexpand_on_split=0
-" If greater than 0, this will be the width of the Buffergator window in any
-" vertical splitting mode, or its height in any horizontal splitting mode
-let g:buffergator_split_size=20
-" Enable auto update 
-let g:buffergator_autoupdate=1
+let g:aghighlight=1
 
 " ************************************************ 
 " Indentline section
@@ -239,7 +231,7 @@ set foldopen-=undo
 map 0 ^
 
 " bracket jump
-map <M-i> %
+map <C-i> %
 
 " move as break line
 map j gj
@@ -273,8 +265,6 @@ func! Compile()
     exec "!clang % -g -O2 -lm -Wall -std=gnu11 -o %<.run"
   elseif &filetype == 'cpp'
     exec "!clang++ % -g -O2 -lm -Wall -std=c++11 -o %<.run"
-  elseif &filetype == 'java'
-    exec "!javac %"
   endif
 endfunc
 
@@ -282,8 +272,6 @@ func! Run()
   exec "w"
   if &filetype == 'c' || &filetype == 'cpp'
     exec "!./%<.run"
-  elseif &filetype == 'java'
-    exec "!java %<"
   endif
 endfunc
 
@@ -313,19 +301,18 @@ endfunc
 " ================================================ 
 " Shortcut remaps
 " ================================================ 
-" shortcut for tagbar view
-silent map <F4> :TagbarToggle<cr>
-
-" shortcut for compile & run
-silent map <F5> :call Compile()<cr>
-silent map <F6> :call Run()<cr>
-
 " shortcut for IDE view
 silent nmap <F2> :call LSidebarToggle()<cr>
 silent imap <F2> <esc>:call LSidebarToggle()<cr>
 silent nmap <F3> :A<cr>
 silent imap <F3> <esc>:A<cr>
 
+" shortcut for tagbar view
+silent map <F4> :TagbarToggle<cr>
+
+" shortcut for compile & run
+silent map <F5> :call Compile()<cr>
+silent map <F6> :call Run()<cr>
 
 " ================================================ 
 " Initialize utilities
