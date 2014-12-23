@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Dependencies:
+#   ncursors
+#   tput setaf [color_number]
+
+# colorSet [ --setaf | --setab | --misc ] var
+# access color ${array[color_name]}
+# Assigns the selected set of escape mappings to the given associative array names.
+function colorSet {
+	typeset -a clrs msc
+	typeset x
+	clrs=(black red green orange blue magenta cyan grey darkgrey ltred ltgreen yellow ltblue ltmagenta ltcyan white)
+	msc=(sgr0 bold dim smul blink rev invis)
+ 
+	while ! ${2:+false}; do
+		${KSH_VERSION:+eval typeset -n "$2"=\$2}
+		case ${1#--} in
+			setaf|setab)
+				for x in "${!clrs[@]}"; do
+					eval "$2"'[${clrs[x]}]=$(tput "${1#--}" "$x")'
+				done
+				;;
+			misc)
+				for x in "${msc[@]}"; do
+					eval "$2"'[$x]=$(tput "$x")'
+				done
+				;;
+			*)
+				return 1
+		esac
+		shift 2
+	done
+}

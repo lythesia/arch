@@ -66,7 +66,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'Shougo/neocomplete.vim'
 if $TERM != 'linux' || has("gui_running")
-Plugin 'Yggdroot/indentLine'
+" Plugin 'Yggdroot/indentLine'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'tpope/vim-fugitive'
 endif
@@ -128,6 +128,7 @@ let g:aghighlight=1
 " ************************************************ 
 " Set char
 let g:indentLine_char='┆' 
+let g:indentLine_faster=1
 
 " ************************************************ 
 " Auto-pair section
@@ -194,7 +195,7 @@ augroup markdown
 augroup end
 au BufNewFile,BufRead, *.jade setlocal ft=jade
 au BufNewFile,BufRead, *.ejs setlocal ft=html
-au BufNewFile,BufRead *.{asm,inc} setlocal ft=nasm
+au BufNewFile,BufRead, *.{asm,inc} setlocal ft=nasm
 
 " set tab
 set tabstop=2
@@ -203,6 +204,7 @@ set shiftwidth=2
 set expandtab
 "au FileType html,jade setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 au FileType make setlocal tabstop=4 shiftwidth=4 noexpandtab
+au FileType scheme setlocal cursorcolumn
 
 " show bracket match
 set showmatch
