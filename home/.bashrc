@@ -42,6 +42,9 @@ alias cnpm="npm --registry=http://r.cnpmjs.org \
                 --cache=$HOME/.npm/.cache/cnpm \
                 --disturl=http://dist.cnpmjs.org \
                 --userconfig=$HOME/.cnpmrc"
+alias http-pxy='export http_proxy=http://localhost:1315;\
+                export https_proxy=http://localhost:1315'
+alias git-pxy='export GIT_SSH=$HOME/intel/ssh'
 
 trash() {
   while [ "$#" -ne 0 ]; do

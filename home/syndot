@@ -48,7 +48,7 @@ for i in `find`; do
   # check file identity
   if diff -q "$HOME/$i" $i &>/dev/null; then
     # same file
-    printf "${fg[green]}."
+    printf "${fg[green]}.${misc[sgr0]}"
     continue
   fi
 
