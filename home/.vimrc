@@ -59,6 +59,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'jtratner/vim-flavored-markdown'
 Plugin 'a.vim'
+Plugin 'drawit'
 Plugin 'majutsushi/tagbar'
 Plugin 'rking/ag.vim'
 Plugin 'Lokaltog/vim-easymotion'
@@ -299,6 +300,17 @@ func! LSidebarToggle()
     exec bufwinnr(b) . "wincmd w"
 endfunc
 
+" drawit
+func! DrawToggle()
+  if exists("b:dodrawit") && b:dodrawit == 1
+    " exec DrawIt#DrawItStart()
+    DrawIt!
+    NeoCompleteEnable
+  else
+    NeoCompleteDisable
+    DrawIt
+  endif
+endfunc
 
 " ================================================ 
 " Shortcut remaps
@@ -315,6 +327,9 @@ silent map <F4> :TagbarToggle<cr>
 " shortcut for compile & run
 silent map <F5> :call Compile()<cr>
 silent map <F6> :call Run()<cr>
+
+" draw
+silent map <F7> :call DrawToggle()<cr>
 
 " ================================================ 
 " Initialize utilities
