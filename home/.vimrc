@@ -59,6 +59,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'jtratner/vim-flavored-markdown'
 Plugin 'a.vim'
+Plugin 'drawit'
 Plugin 'majutsushi/tagbar'
 Plugin 'rking/ag.vim'
 Plugin 'Lokaltog/vim-easymotion'
@@ -150,13 +151,7 @@ let g:snips_author='lythesia'
 " View section
 " ================================================ 
 " colo schema
-if has("gui_running")
-  colo desertEx
-  set guifont=YaHei\ Consolas\ Hybrid\ for\ Powerline\ 10
-  set linespace=0
-  set cursorline
-  set lines=40 columns=100
-elseif $TERM == 'xterm' || $TERM == "screen-256color" || $TERM == "rxvt-unicode-256color"
+if $TERM == 'xterm' || $TERM == "screen-256color" || $TERM == "rxvt-unicode-256color"
   set t_Co=256
   colo desertEx_term
 else
@@ -299,6 +294,17 @@ func! LSidebarToggle()
     exec bufwinnr(b) . "wincmd w"
 endfunc
 
+" drawit
+func! DrawToggle()
+  if exists("b:dodrawit") && b:dodrawit == 1
+    " exec DrawIt#DrawItStart()
+    DrawIt!
+    NeoCompleteEnable
+  else
+    NeoCompleteDisable
+    DrawIt
+  endif
+endfunc
 
 " ================================================ 
 " Shortcut remaps
@@ -315,6 +321,9 @@ silent map <F4> :TagbarToggle<cr>
 " shortcut for compile & run
 silent map <F5> :call Compile()<cr>
 silent map <F6> :call Run()<cr>
+
+" draw
+silent map <F7> :call DrawToggle()<cr>
 
 " ================================================ 
 " Initialize utilities
