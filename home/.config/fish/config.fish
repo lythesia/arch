@@ -16,7 +16,7 @@ function tree -d 'tree list'
 end
 
 # sys
-function p -d 'pacman'
+function p -d 'pacman' --wraps pacman
   if echo $argv | grep -q -E '[-]S[^si]'
     sudo pacman $argv
   else
@@ -24,7 +24,7 @@ function p -d 'pacman'
   end
 end
 
-function y -d 'yaourt'
+function y -d 'yaourt' --wraps yaourt
   yaourt $argv
 end
 
