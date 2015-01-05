@@ -12,12 +12,25 @@ function fish_prompt
   end
 
   set -l cwd $under_yellow(echo $PWD | sed -e "s|^$HOME|~|")
-  set -l host $red(hostname)
+  if not set -q __fish_hostname
+    set -g __fish_hostname $red(hostname)
+  end
 
   echo
   echo -n $marker
-  echo -s $host$normal : $cwd$normal
-  echo -n -s $marker $normal
+  switch $fish_bind_mode
+    case default
+      set_color -u magenta
+      echo -n "N"
+    case insert
+      set_color -ou green
+      echo -n "I"
+    case visual
+      set_color -u yellow
+      echo -n "V"
+  end
+  echo -s $normal : $__fish_hostname$normal : $cwd$normal
+  echo $marker
 end
 
 function fish_right_prompt

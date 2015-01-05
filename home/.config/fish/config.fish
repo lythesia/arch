@@ -1,11 +1,10 @@
+# vi-mode
+set -g fish_key_bindings fish_vi_key_bindings
+
 # alias {{
 # op
 function c -d 'clear screen'
   clear
-end
-
-function .. -d 'cd parent'
-  cd ..
 end
 
 function ll -d 'list via ls++'
@@ -18,8 +17,6 @@ end
 
 # sys
 function p -d 'pacman'
-  set -l cmd "pacman --color=auto"
-# S Su Sy
   if echo $argv | grep -q -E '[-]S[^si]'
     sudo pacman $argv
   else
@@ -36,7 +33,11 @@ function dmesg -d 'dmesg readable'
 end
 
 function sc -d 'systemctl'
-  systemctl $argv
+  if echo $argv | grep -q -E 'status'
+    systemctl $argv
+  else
+    sudo systemctl $argv
+  end
 end
 
 function sjc -d 'su journalctl'
@@ -58,9 +59,5 @@ end
 
 function git-pxy -d 'git proxy at intel'
   export GIT_SSH=$HOME/intel/ssh
-end
-
-function nemo -d 'nemo-fm'
-  /usr/bin/nemo --no-desktop $argv
 end
 # }}
