@@ -1,2 +1,2 @@
-(use-modules (ice-9 readline))
+(use-modules (ice-9 readline) (srfi srfi-1))
 (activate-readline)
