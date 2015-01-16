@@ -11,10 +11,6 @@ function ll -d 'list via ls++'
   ls++ --potsf $argv
 end
 
-function tree -d 'tree list'
-  tree -C $argv
-end
-
 # sys
 function p -d 'pacman' --wraps pacman
   if echo $argv | grep -q -E '[-]S[^si]'
@@ -50,11 +46,11 @@ end
 
 # app
 function prys -d 'ruby interact'
-  pry --simple-prompt
+  pry --simple-prompt $argv
 end
 
 function scm -d 'guile interact'
-  guile --no-auto-compile
+  guile --no-auto-compile --use-srfi=1 $argv
 end
 
 function git-pxy -d 'git proxy at intel'
