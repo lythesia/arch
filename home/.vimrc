@@ -58,6 +58,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'jtratner/vim-flavored-markdown'
+Plugin 'derekwyatt/vim-scala'
 Plugin 'a.vim'
 Plugin 'drawit'
 Plugin 'majutsushi/tagbar'
@@ -65,8 +66,10 @@ Plugin 'rking/ag.vim'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tpope/vim-surround'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/neocomplete.vim'
-if $TERM != 'linux' || has("gui_running")
+Plugin 'itchyny/lightline.vim'
+if $TERM != 'linux'
 " Plugin 'Yggdroot/indentLine'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'tpope/vim-fugitive'
@@ -80,15 +83,28 @@ filetype plugin indent on
 " Neocomplete section
 " ************************************************ 
 let g:acp_enableAtStartup=0
+" let g:neocomplete#enable_insert_char_pre=1
 let g:neocomplete#enable_at_startup=1
 let g:neocomplete#enable_smart_case=1
 let g:neocomplete#sources#syntax#min_keyword_length=3
 let g:neocomplete#lock_buffer_name_pattern='\*ku\*'
+if !exists('g:neocomplete#keyword_patterns')
+  let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javacriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+let g:neocomplete#ctags_command = "ctags"
+let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " ************************************************ 
 " EasyMotion section
@@ -135,6 +151,7 @@ let g:indentLine_faster=1
 " Auto-pair section
 " ************************************************ 
 let g:AutoPairs={'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
+let g:AutoPairsMapBS=0
 
 " ************************************************ 
 " Powerline section
@@ -151,7 +168,7 @@ let g:snips_author='lythesia'
 " View section
 " ================================================ 
 " colo schema
-if $TERM == 'xterm' || $TERM == "screen-256color" || $TERM == "rxvt-unicode-256color"
+if $TERM == 'xterm'|| $TERM == 'xterm-256color' || $TERM == "screen-256color" || $TERM == "rxvt-unicode-256color"
   set t_Co=256
   colo desertEx_term
 else
@@ -177,7 +194,7 @@ set cmdheight=2
 " Edit section
 " ================================================ 
 " set cond comment
-set formatoptions+=r
+set formatoptions=cqrt
 " linewrap for latex
 au FileType plaintex setlocal formatoptions+=Mm textwidth=80
 let g:tex_fast=""
@@ -313,10 +330,10 @@ endfunc
 silent nmap <F2> :call LSidebarToggle()<cr>
 silent imap <F2> <esc>:call LSidebarToggle()<cr>
 silent nmap <F3> :A<cr>
-silent imap <F3> <esc>:A<cr>
 
 " shortcut for tagbar view
 silent map <F4> :TagbarToggle<cr>
+silent imap <F4> :TagbarToggle<cr>
 
 " shortcut for compile & run
 silent map <F5> :call Compile()<cr>

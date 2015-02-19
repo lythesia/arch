@@ -21,8 +21,8 @@ URxvt.scrollTtyKeypress:True
 URxvt.cursorBlink:True
 URxvt.saveLines:1024
 URxvt.letterSpace:-2
-!URxvt.font:xft:Source Code Pro for Powerline:size=10:antialias=true
-!URxvt.boldFont:xft:Source Code Pro for Powerline:size=10:antialias=true
+! URxvt.font:xft:YaHei Consolas Hybrid for Powerline:size=10
+! URxvt.boldFont:xft:YaHei Consolas Hybrid for Powerline:size=10
 URxvt.font:xft:YaHei Consolas Hybrid for Powerline:size=10:antialias=true,xft:Source Han Sans:size=10:antialias=true
 URxvt.boldFont:xft:YaHei Consolas Hybrid for Powerline:size=10:antialias=true,xft:Source Han Sans:size=10:antialias=true
 URxvt.iso14755: false
@@ -104,8 +104,6 @@ xterm*faceNameDoublesize: YaHei Consolas Hybrid for Powerline
 xterm*faceSize: 10
 xterm*allowBoldFonts: false
 xterm*scaleHeight: 1.2
-!URxvt.font:xft:YaHei Consolas Hybrid for Powerline:size=9:antialias=true,xft:Inconsolata:size=9:antialias=true
-!URxvt.boldFont:xft:YaHei Consolas Hybrid for Powerline:size=9:antialias=true,xft:Inconsolata:size=9:antialias=true
 
 ! Tango theme
 !tango color scheme

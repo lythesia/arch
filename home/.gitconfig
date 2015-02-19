@@ -6,7 +6,7 @@
   ci=commit
   st=status
   br=branch
-  hist=log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  hist=log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset' --abbrev-commit
   type=cat-file -t
   dump=cat-file -p
 [push]
