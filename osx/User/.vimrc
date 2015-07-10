@@ -61,9 +61,10 @@ Plugin 'gmarik/vundle'
 Plugin 'msanders/snipmate.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'jtratner/vim-flavored-markdown'
-Plugin 'a.vim'
+" Plugin 'a.vim'
 Plugin 'drawit'
 Plugin 'majutsushi/tagbar'
 Plugin 'rking/ag.vim'
@@ -73,8 +74,8 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'tpope/vim-fugitive'
-Plugin 'rizzatti/dash.vim'
-Plugin 'derekwyatt/vim-scala'
+" Plugin 'rizzatti/dash.vim'
+" Plugin 'derekwyatt/vim-scala'
 Plugin 'tpope/vim-haml'
 
 " reset filetype
@@ -109,7 +110,7 @@ let g:EasyMotion_leader_key='<Leader>'
 " ************************************************ 
 " Nerdtree section
 " ************************************************ 
-let g:NERDTreeIgnore=['.o$[[file]]', '.bin$[[file]]', '.img$[[file]]']
+" let g:NERDTreeIgnore=['.o$[[file]]', '.bin$[[file]]', '.img$[[file]]']
 
 " ************************************************ 
 " Nerdcomment section
@@ -265,9 +266,9 @@ map <C-d> :call Scrolld()<cr>
 func! Compile()
   exec "w"
   if &filetype == 'c'
-    exec "!gcc-4.9 % -O2 -lm -fno-asm -Wall -fdiagnostics-color=always -std=c11 -o %<.run"
+    exec "!gcc-5 % -O2 -lm -fno-asm -Wall -fdiagnostics-color=always -std=c11 -o %<.run"
   elseif &filetype == 'cpp'
-    exec "!g++-4.9 % -O2 -lm -fno-asm -Wall -fdiagnostics-color=always -std=c++14 -o %<.run"
+    exec "!g++-5 % -O2 -lm -fno-asm -Wall -fdiagnostics-color=always -std=c++11 -o %<.run"
   endif
 endfunc
 
@@ -276,11 +277,13 @@ func! Run()
   if &filetype == 'c' || &filetype == 'cpp'
     exec "!./%<.run"
   elseif &filetype == 'ruby'
-    exec "!ruby %<"
+    exec "!ruby %"
   elseif &filetype == 'python'
-    exec "!python3 %<"
+    exec "!python3 %"
   elseif &filetype == 'js'
-    exec "!node %<"
+    exec "!node %"
+  elseif &filetype == 'go'
+    exec "!go run %"
   endif
 endfunc
 

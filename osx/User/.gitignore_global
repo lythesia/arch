@@ -6,3 +6,5 @@
 a.out
 
 .envrc
+.pryrc
+.pry_history

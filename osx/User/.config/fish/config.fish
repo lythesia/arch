@@ -85,15 +85,19 @@ abbr -a gc='git commit'
 abbr -a gco='git checkout'
 abbr -a gp='git push'
 
+# dot
+abbr -a dots="dot -Tsvg"
+abbr -a dotp="dot -Tpng"
+
 # pxy
-function start_tunnel -d 'Start SSH'
-  while [ true ]
-    echo 'Connect and listen on port 1314...'
-    ssh -p 22 -vNCTD 1314 yushu@103.245.209.75
-    echo 'Retry in 3 seconds...'
-    sleep 3
-  end
-end
+# function start_tunnel -d 'Start SSH'
+#   while [ true ]
+#     echo 'Connect and listen on port 1314...'
+#     ssh -p 22 -vNCTD 1314 yushu@103.245.209.75
+#     echo 'Retry in 3 seconds...'
+#     sleep 3
+#   end
+# end
 
 function http_pxy -d 'http proxy'
   export http_proxy=http://localhost:1315; export https_proxy=http://localhost:1315
