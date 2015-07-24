@@ -51,6 +51,14 @@ function ccg -d "clang++ with debug"
   clang++ -std=c++11 -g -o a.out $argv[1]
 end
 
+function rmzip -d "rm zip|rar|7z"
+  command rm -v *.{zip,rar,7z}
+end
+
+function today -d "today yyy-mm-dd"
+  command date "+%Y-%m-%d"
+end
+
 function grep -d 'grep color'
   command grep --color=auto $argv
 end
